@@ -6,18 +6,16 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.Settings
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_game.*
 
@@ -32,51 +30,97 @@ class Game : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-        setProgressBar(false)
-        var questionData = intent.getSerializableExtra("PEOPLE") as Array<Person>
 
-                //See the next plant
+        Log.i("WHAT", "well")
         btnNextPlant.setOnClickListener{
             if (checkForInternetConnection()) {
-               // setProgressBar(true)
-                var numberOfPlants = questionData?.size ?: 0
+                var difficulty = intent.getStringExtra("DIFFICULTY")
 
-                if (numberOfPlants > 0) {
-                    var randomPlantIndexForButton1: Int = (Math.random() * questionData!!.size).toInt()
-                    var randomPlantIndexForButton2: Int = (Math.random() * questionData!!.size).toInt()
-                    var randomPlantIndexForButton3: Int = (Math.random() * questionData!!.size).toInt()
-                    var randomPlantIndexForButton4: Int = (Math.random() * questionData!!.size).toInt()
-
-                    var allRandomPlants = ArrayList<Person>()
-                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton1))
-                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton2))
-                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton3))
-                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton4))
-
-                    button1.text = questionData!!.get(randomPlantIndexForButton1).toString()
-                    button2.text = questionData!!.get(randomPlantIndexForButton2).toString()
-                    button3.text = questionData!!.get(randomPlantIndexForButton3).toString()
-                    button4.text = questionData!!.get(randomPlantIndexForButton4).toString()
-
-                    correctAnswerIndex = (Math.random() * allRandomPlants.size).toInt()
-                    correctPerson = allRandomPlants.get(correctAnswerIndex)
-
-                    val downloadingImageTask = DownloadingImageTask()
-                    downloadingImageTask.execute(allRandomPlants.get(correctAnswerIndex).name)
-                }
-                var gradientColors: IntArray = IntArray(2)
-                gradientColors[0] = Color.parseColor("#BFBFBF")
-                gradientColors[1] = Color.parseColor("#99e79d")
-                var gradient = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors)
-                gradient.cornerRadius = dpToPx(30f, this)
-                gradient.setStroke(5,Color.parseColor("#FFFFFF"))
-
-                button1.setBackground(gradient)
-                button2.setBackground(gradient)
-                button3.setBackground(gradient)
-                button4.setBackground(gradient)
+                Log.i("WHAT", difficulty)
+                generateQuiz(difficulty)
             }
         }
+    }
+
+    fun generateQuiz(difficulty: String) {
+        val questionData = intent.getSerializableExtra("PEOPLE") as Array<Person>
+        val numberOfPeopleInBank = questionData.size
+
+        if (difficulty == "Easy" && numberOfPeopleInBank > 0) {
+            button3.setVisibility(View.GONE)
+            button4.setVisibility(View.GONE)
+            val randomIndexForButton1: Int = (Math.random() * questionData.size).toInt()
+            var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
+            while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
+                randomIndexForButton2 = (Math.random() * questionData.size).toInt()
+            }
+            val possibleAnswers = ArrayList<Person>()
+            possibleAnswers.add(questionData.get(randomIndexForButton1))
+            possibleAnswers.add(questionData.get(randomIndexForButton2))
+            button1.text = questionData.get(randomIndexForButton1).toString()
+            button2.text = questionData.get(randomIndexForButton2).toString()
+
+            correctAnswerIndex = (Math.random() * possibleAnswers.size).toInt()
+            correctPerson = possibleAnswers.get(correctAnswerIndex)
+
+            val downloadingImageTask = DownloadingImageTask()
+            downloadingImageTask.execute(possibleAnswers.get(correctAnswerIndex).name)
+
+        }
+        else if (difficulty == "Normal" && numberOfPeopleInBank > 0) {
+            button4.setVisibility(View.GONE)
+            val randomIndexForButton1: Int = (Math.random() * questionData.size).toInt()
+            var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
+            var randomIndexForButton3: Int = (Math.random() * questionData.size).toInt()
+            while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
+                randomIndexForButton2 = (Math.random() * questionData.size).toInt()
+                while (randomIndexForButton2 == randomIndexForButton3) { //randomize again
+                    randomIndexForButton3 = (Math.random() * questionData.size).toInt()
+                }
+            }
+            val possibleAnswers = ArrayList<Person>()
+            possibleAnswers.add(questionData.get(randomIndexForButton1))
+            possibleAnswers.add(questionData.get(randomIndexForButton2))
+            possibleAnswers.add(questionData.get(randomIndexForButton3))
+            button1.text = questionData.get(randomIndexForButton1).toString()
+            button2.text = questionData.get(randomIndexForButton2).toString()
+            button3.text = questionData.get(randomIndexForButton3).toString()
+
+            correctAnswerIndex = (Math.random() * possibleAnswers.size).toInt()
+            correctPerson = possibleAnswers.get(correctAnswerIndex)
+
+            val downloadingImageTask = DownloadingImageTask()
+            downloadingImageTask.execute(possibleAnswers.get(correctAnswerIndex).name)
+
+        }
+        else if (numberOfPeopleInBank > 0) {
+            var randomPlantIndexForButton1: Int = (Math.random() * questionData.size).toInt()
+            var randomPlantIndexForButton2: Int = (Math.random() * questionData.size).toInt()
+            var randomPlantIndexForButton3: Int = (Math.random() * questionData.size).toInt()
+            var randomPlantIndexForButton4: Int = (Math.random() * questionData.size).toInt()
+
+            var allRandomPlants = ArrayList<Person>()
+            allRandomPlants.add(questionData.get(randomPlantIndexForButton1))
+            allRandomPlants.add(questionData.get(randomPlantIndexForButton2))
+            allRandomPlants.add(questionData.get(randomPlantIndexForButton3))
+            allRandomPlants.add(questionData.get(randomPlantIndexForButton4))
+
+            button1.text = questionData.get(randomPlantIndexForButton1).toString()
+            button2.text = questionData.get(randomPlantIndexForButton2).toString()
+            button3.text = questionData.get(randomPlantIndexForButton3).toString()
+            button4.text = questionData.get(randomPlantIndexForButton4).toString()
+
+            correctAnswerIndex = (Math.random() * allRandomPlants.size).toInt()
+            correctPerson = allRandomPlants.get(correctAnswerIndex)
+
+            val downloadingImageTask = DownloadingImageTask()
+            downloadingImageTask.execute(allRandomPlants.get(correctAnswerIndex).name)
+        }
+        var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox)
+        button1.background = backgroundpic
+        button2.background = backgroundpic
+        button3.background = backgroundpic
+        button4.background = backgroundpic
     }
 
     fun button1IsClicked(buttonView: View)  {
@@ -174,42 +218,30 @@ class Game : AppCompatActivity() {
     }
 
     private fun evaluateAnswer(userGuess: Int) {
-        var gradientColors: IntArray = IntArray(2)
-        gradientColors[0] = Color.parseColor("#FF0000")
-        gradientColors[1] = Color.parseColor("#99e79d")
-        var gradient = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors)
-        gradient.cornerRadius = dpToPx(30f, this)
-        gradient.setStroke(5,Color.parseColor("#FFFFFF"))
-
-        var gradientColors2: IntArray = IntArray(2)
-        gradientColors2[0] = Color.parseColor("#00FF00")
-        gradientColors2[1] = Color.parseColor("#99e79d")
-        var gradient2 = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, gradientColors2)
-        gradient2.cornerRadius = dpToPx(30f, this)
-        gradient2.setStroke(5,Color.parseColor("#FFFFFF"))
-
-
         if (userGuess != correctAnswerIndex) {
             userAnsweredIncorrectly++
             txtWrongAnswers.text = "$userAnsweredIncorrectly"
             var correctPlantName = correctPerson.toString()
             txtState.text = "Wrong. Choose : $correctPlantName"
 
+            var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox_wrong)
             when (userGuess) {
-                0 -> button1.setBackground(gradient)
-                1 -> button2.setBackground(gradient)
-                2 -> button3.setBackground(gradient)
-                3 -> button4.setBackground(gradient)
+                0 -> button1.setBackground(backgroundpic)
+                1 -> button2.setBackground(backgroundpic)
+                2 -> button3.setBackground(backgroundpic)
+                3 -> button4.setBackground(backgroundpic)
             }
         } else {
             numberOfTimesUserAnsweredCorrectly++
             txtRightAnswers.text = "$numberOfTimesUserAnsweredCorrectly"
             txtState.text = "Right!"
+
+            var backgroundpic2 = ContextCompat.getDrawable(this, R.drawable.answerbox_correct)
             when (correctAnswerIndex) {
-                0 -> button1.setBackground(gradient2)
-                1 -> button2.setBackground(gradient2)
-                2 -> button3.setBackground(gradient2)
-                3 -> button4.setBackground(gradient2)
+                0 -> button1.setBackground(backgroundpic2)
+                1 -> button2.setBackground(backgroundpic2)
+                2 -> button3.setBackground(backgroundpic2)
+                3 -> button4.setBackground(backgroundpic2)
             }
         }
     }
@@ -234,22 +266,6 @@ class Game : AppCompatActivity() {
         override fun onPostExecute(result: Bitmap?) {
             super.onPostExecute(result)
             imgTaken.setImageBitmap(result)
-           // setProgressBar(false)
-        }
-    }
-
-   // ProgressBar State
-    private fun setProgressBar(show: Boolean) {
-        if (show) {
-            setUIWidgets(false)
-            linearLayoutProgress.setVisibility(View.VISIBLE)
-            progressBar.setVisibility(View.VISIBLE)
-            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        } else {
-            setUIWidgets(true)
-            linearLayoutProgress.setVisibility(View.GONE)
-            progressBar.setVisibility(View.GONE)
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         }
     }
 

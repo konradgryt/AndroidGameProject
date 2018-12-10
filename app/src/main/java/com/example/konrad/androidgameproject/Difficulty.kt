@@ -7,53 +7,57 @@ import android.provider.Contacts
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import java.util.*
 import kotlinx.android.synthetic.main.activity_game.*
+import kotlinx.android.synthetic.main.activity_select_difficulty.*
 
 class Difficulty : AppCompatActivity() {
     val START_GAME = 1
+    var difficulty :String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_difficulty)
+        setProgressBar(false)
     }
 
     fun onClickEasyDifficulty(buttonView: View)  {
         try {
+            setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
             innerClassObject.execute("Easy")
         } catch(e: Exception) {
-            Log.i("DATA", "Noooooo")
             e.printStackTrace()
         }
     }
 
     fun onClickNormalDifficulty(buttonView: View) {
         try {
+            setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
             innerClassObject.execute("Normal")
         } catch(e: Exception) {
-            Log.i("DATA", "Noooooo")
             e.printStackTrace()
         }
     }
 
     fun onClickHardDifficulty(buttonView: View) {
         try {
+            setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
             innerClassObject.execute("Hard")
         } catch(e: Exception) {
-            Log.i("DATA", "Noooooo")
             e.printStackTrace()
         }
     }
 
     fun onClickVeryHardDifficulty(buttonView: View) {
         try {
+            setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
             innerClassObject.execute("Very Hard")
         } catch(e: Exception) {
-            Log.i("DATA", "Noooooo")
             e.printStackTrace()
         }
     }
@@ -69,7 +73,7 @@ class Difficulty : AppCompatActivity() {
                 "Hard" -> pages = 3
                 "Very Hard" -> pages = 3
             }
-
+            difficulty = params[0]
             Log.i("PAGES", pages.toString())
             return parsePerson.parsePeopleFromJSONData(pages)
         }
@@ -84,7 +88,25 @@ class Difficulty : AppCompatActivity() {
 
             val gameIntent = Intent(this@Difficulty, Game::class.java)
             gameIntent.putExtra("PEOPLE", readyArray)
+            gameIntent.putExtra("DIFFICULTY", difficulty)
             startActivityForResult(gameIntent, START_GAME)
+            setProgressBar(false)
+        }
+    }
+
+
+    // ProgressBar State
+    private fun setProgressBar(show: Boolean) {
+        if (show) {
+            //setUIWidgets(false)
+            linearLayoutProgress.setVisibility(View.VISIBLE)
+            progressBar.setVisibility(View.VISIBLE)
+            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        } else {
+            //setUIWidgets(true)
+            linearLayoutProgress.setVisibility(View.GONE)
+            progressBar.setVisibility(View.GONE)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         }
     }
 }

@@ -5,8 +5,8 @@
     <string name="music">Music</string>
     <string name="dark_mode">Dark mode</string>
     <string name="current_player">Player</string>
-    <string name="padawan_difficulty">Two answers to select from</string>
-    <string name="jedi_difficulty">Three answers to select from </string>
-    <string name="jedi_knight_difficulty">Four answers to select from</string>
-    <string name="jedi_master_difficulty">No answers to select from</string>
+    <string name="padawan_difficulty">Two answers to select from, total bank of cards: 10</string>
+    <string name="jedi_difficulty">Three answers to select from, total bank of cards: 20 </string>
+    <string name="jedi_knight_difficulty">Four answers to select from, total bank of cards: 30</string>
+    <string name="jedi_master_difficulty">No answers to select from, total bank of cards: 30</string>
 </resources>

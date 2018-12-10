@@ -7,17 +7,91 @@
     android:layout_height="match_parent"
     android:background="#000000"
     tools:context=".Game">
+
     <ImageView
         android:id="@+id/imgTaken"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="200dp"
         android:onClick="imageViewIsClicked"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/placeholder" />
+
+    <TextView
+        android:id="@+id/txtState"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:text="TESTING"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTaken"
+        app:layout_constraintVertical_bias="0.185"
+        tools:layout_editor_absoluteX="62dp" />
+
+    <Button
+        android:id="@+id/btnNextPlant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toEndOf="@+id/imgTaken"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.34"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <TextView
+        android:id="@+id/txtWrongAnswers"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="left"
+        android:text="WRONG"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTaken"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtRightAnswers"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="right"
+        android:text="RIGHT"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toEndOf="@+id/txtWrongAnswers"
+        app:layout_constraintTop_toBottomOf="@+id/imgTaken"
+        app:layout_constraintVertical_bias="0.0" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
@@ -31,7 +105,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgTaken">
+        app:layout_constraintTop_toBottomOf="@+id/imgTaken"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,7 +117,7 @@
                 android:id="@+id/button1"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:background="@drawable/button_border"
+                android:background="@drawable/answerbox"
                 android:onClick="button1IsClicked"
                 android:textColor="#FFFFFF" />
 
@@ -50,39 +125,10 @@
                 android:id="@+id/button2"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:background="@drawable/button_border"
+                android:background="@drawable/answerbox"
                 android:onClick="button2IsClicked"
                 android:textColor="#FFFFFF" />
 
-            <TextView
-                android:id="@+id/txtWrongAnswers"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:gravity="left"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btnNextPlant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:clickable="true"
-                android:visibility="visible"
-                app:srcCompat="@android:drawable/btn_dialog" />
-
-            <TextView
-                android:id="@+id/txtState"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="-"
-                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +140,7 @@
                 android:id="@+id/button3"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:background="@drawable/button_border"
+                android:background="@drawable/answerbox"
                 android:onClick="button3IsClicked"
                 android:textColor="#FFFFFF" />
 
@@ -102,34 +148,10 @@
                 android:id="@+id/button4"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:background="@drawable/button_border"
+                android:background="@drawable/answerbox"
                 android:onClick="button4IsClicked"
                 android:textColor="#FFFFFF" />
 
-            <TextView
-                android:id="@+id/txtRightAnswers"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:gravity="right"
-                android:textColor="#FFFFFF" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayoutProgress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#B0000000"
-        android:gravity="center_vertical|center_horizontal|center"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_vertical|center_horizontal|center" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
