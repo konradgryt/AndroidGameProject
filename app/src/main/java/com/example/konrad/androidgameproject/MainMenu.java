@@ -11,6 +11,8 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class MainMenu extends AppCompatActivity {
+    final int OPEN_DIFFICULTY_CODE = 1000;
+    final int OPEN_OPTIONS_CODE = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +37,16 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void startGame(View vew) {
-        Intent getGameIntent = new Intent(this, Game.class);
-        final int result = 1;
-        startActivityForResult(getGameIntent,result);
+//        Intent getGameIntent = new Intent(this, Game.class);
+//        final int result = 1;
+//        startActivityForResult(getGameIntent,result);
+        Intent getGameIntent = new Intent(this, Difficulty.class);
+        startActivityForResult(getGameIntent,OPEN_DIFFICULTY_CODE);
     }
 
     public void openOptions(View view) {
         Intent getOptionsIntent = new Intent(this, OptionsScreen.class);
         //startActivity(getOptionsIntent);
-        final int result = 1;
-       startActivityForResult(getOptionsIntent,result);
+       startActivityForResult(getOptionsIntent,OPEN_OPTIONS_CODE);
     }
 }

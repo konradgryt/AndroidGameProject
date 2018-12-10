@@ -33,16 +33,36 @@ class Game : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         setProgressBar(false)
+        var questionData = intent.getSerializableExtra("PEOPLE") as Array<Person>
 
-        //See the next plant
+                //See the next plant
         btnNextPlant.setOnClickListener{
             if (checkForInternetConnection()) {
-                setProgressBar(true)
-                try {
-                    val innerClassObject = DownloadingPlantTask()
-                    innerClassObject.execute() //calss doInBackground function in innerClassObject
-                } catch(e: Exception) {
-                    e.printStackTrace()
+               // setProgressBar(true)
+                var numberOfPlants = questionData?.size ?: 0
+
+                if (numberOfPlants > 0) {
+                    var randomPlantIndexForButton1: Int = (Math.random() * questionData!!.size).toInt()
+                    var randomPlantIndexForButton2: Int = (Math.random() * questionData!!.size).toInt()
+                    var randomPlantIndexForButton3: Int = (Math.random() * questionData!!.size).toInt()
+                    var randomPlantIndexForButton4: Int = (Math.random() * questionData!!.size).toInt()
+
+                    var allRandomPlants = ArrayList<Person>()
+                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton1))
+                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton2))
+                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton3))
+                    allRandomPlants.add(questionData!!.get(randomPlantIndexForButton4))
+
+                    button1.text = questionData!!.get(randomPlantIndexForButton1).toString()
+                    button2.text = questionData!!.get(randomPlantIndexForButton2).toString()
+                    button3.text = questionData!!.get(randomPlantIndexForButton3).toString()
+                    button4.text = questionData!!.get(randomPlantIndexForButton4).toString()
+
+                    correctAnswerIndex = (Math.random() * allRandomPlants.size).toInt()
+                    correctPerson = allRandomPlants.get(correctAnswerIndex)
+
+                    val downloadingImageTask = DownloadingImageTask()
+                    downloadingImageTask.execute(allRandomPlants.get(correctAnswerIndex).name)
                 }
                 var gradientColors: IntArray = IntArray(2)
                 gradientColors[0] = Color.parseColor("#BFBFBF")
@@ -59,7 +79,6 @@ class Game : AppCompatActivity() {
         }
     }
 
-
     fun button1IsClicked(buttonView: View)  {
         evaluateAnswer(0)
     }
@@ -74,61 +93,6 @@ class Game : AppCompatActivity() {
 
     fun button4IsClicked(buttonView: View) {
         evaluateAnswer(3)
-    }
-
-    // <Parameters that wil be passed to the task , Integer - on progress update method, Datatype of returned value of async task>
-    inner class DownloadingPlantTask: AsyncTask<String, Int, List<Person>>() {
-
-        //overwriting function from asynctask class
-        // vararg is passing multiple parameters?
-        // can access background thread. not the user interface thread
-        override fun doInBackground(vararg params: String?): List<Person>? { //called by execute
-
-            //to do it need to add:
-            // (inside manifest) <uses-permission android:name="android.permission.INTERNET" />
-            // (inside application) android:usesCleartextTraffic="true"
-//            val downloadingObject: DownloadingObject =
-//                DownloadingObject()
-//            val jsonData = downloadingObject.downloadJSONDataFromLink("http://plantplaces.com/perl/mobile/flashcard.pl")
-//            Log.i("JSON", jsonData)
-
-            val parsePlant = ParsePersonUtility()
-
-            return parsePlant.parsePeopleFromJSONData()
-        }
-
-        // after doinbackground is going to be executed completely,
-        // /ts going to pass its result as parameter to onpostexecute automatically
-        // can access user interface thread. not background thread
-        override fun onPostExecute(result: List<Person>?) {
-            super.onPostExecute(result)
-
-            var numberOfPlants = result?.size ?: 0
-
-            if (numberOfPlants > 0) {
-                var randomPlantIndexForButton1: Int = (Math.random() * result!!.size).toInt()
-                var randomPlantIndexForButton2: Int = (Math.random() * result.size).toInt()
-                var randomPlantIndexForButton3: Int = (Math.random() * result.size).toInt()
-                var randomPlantIndexForButton4: Int = (Math.random() * result.size).toInt()
-
-                var allRandomPlants = ArrayList<Person>()
-                allRandomPlants.add(result.get(randomPlantIndexForButton1))
-                allRandomPlants.add(result.get(randomPlantIndexForButton2))
-                allRandomPlants.add(result.get(randomPlantIndexForButton3))
-                allRandomPlants.add(result.get(randomPlantIndexForButton4))
-
-                button1.text = result.get(randomPlantIndexForButton1).toString()
-                button2.text = result.get(randomPlantIndexForButton2).toString()
-                button3.text = result.get(randomPlantIndexForButton3).toString()
-                button4.text = result.get(randomPlantIndexForButton4).toString()
-
-                correctAnswerIndex = (Math.random() * allRandomPlants.size).toInt()
-                correctPerson = allRandomPlants.get(correctAnswerIndex)
-
-                val downloadingImageTask = DownloadingImageTask()
-                downloadingImageTask.execute(allRandomPlants.get(correctAnswerIndex).name)
-            }
-        }
     }
 
     override fun onStart() {
@@ -270,7 +234,7 @@ class Game : AppCompatActivity() {
         override fun onPostExecute(result: Bitmap?) {
             super.onPostExecute(result)
             imgTaken.setImageBitmap(result)
-            setProgressBar(false)
+           // setProgressBar(false)
         }
     }
 

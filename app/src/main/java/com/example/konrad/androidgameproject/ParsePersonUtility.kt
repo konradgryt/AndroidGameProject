@@ -9,11 +9,16 @@ import java.util.*
 class ParsePersonUtility {
     var allPersonObjects: ArrayList<Person> = ArrayList()
 
-    fun parsePeopleFromJSONData(): List<Person>? {
+    fun parsePeopleFromJSONData(pages: Int): List<Person>? {
         currentId = 1
-        for (i in 1..3) {
-            parsePlantObjectsFromJSONData("https://swapi.co/api/people/", "?page=$i")
+        parsePlantObjectsFromJSONData("https://swapi.co/api/people/", "")
+        if (pages > 1) {
+            for (i in 2..pages) {
+                Log.i("WELL", i.toString())
+                parsePlantObjectsFromJSONData("https://swapi.co/api/people/", "?page=$i")
+            }
         }
+        Log.i("WHAT", allPersonObjects.size.toString())
         return allPersonObjects
     }
 
@@ -42,10 +47,10 @@ class ParsePersonUtility {
                 personObject.birth_year = getString("birth_year")
                 personObject.gender = getString("gender")
                 personObject.homeworld = getString("homeworld")
-                personObject.films = getJSONArray("films")
-                personObject.species   = getJSONArray("species")
-                personObject.vehicles = getJSONArray("vehicles")
-                personObject.starships = getJSONArray("starships")
+                personObject.films = convertJSONArray(getJSONArray("films"))
+                personObject.species   = convertJSONArray(getJSONArray("species"))
+                personObject.vehicles = convertJSONArray(getJSONArray("vehicles"))
+                personObject.starships = convertJSONArray(getJSONArray("starships"))
                 personObject.created = getString("created")
                 personObject.edited = getString("edited")
                 personObject.url = getString("url")
@@ -58,5 +63,16 @@ class ParsePersonUtility {
             Log.i("PEOPLE", "${allPersonObjects[i]}")
         }
         return allPersonObjects
+    }
+
+    fun convertJSONArray(jsonObject: JSONArray) : ArrayList<String>{
+        val listdata = ArrayList<String>()
+        val jArray = jsonObject
+        if (jArray != null) {
+            for (i in 0 until jArray.length()) {
+                listdata.add(jArray.getString(i))
+            }
+        }
+        return listdata
     }
 }
