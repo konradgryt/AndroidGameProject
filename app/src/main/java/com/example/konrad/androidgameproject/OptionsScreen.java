@@ -39,7 +39,7 @@ public class OptionsScreen extends Activity {
             optionsLayout.setBackgroundColor(Color.BLACK);
             btnOptionsDarkMode.setText(R.string.button_on);
         } else if (!isDarkModeOn) {
-            optionsLayout.setBackgroundColor(Color.LTGRAY);
+            optionsLayout.setBackgroundColor(Color.DKGRAY);
             btnOptionsDarkMode.setText(R.string.button_off);
         }
     }
