@@ -13,6 +13,7 @@ import org.w3c.dom.Text;
 public class MainMenu extends AppCompatActivity {
     final int OPEN_DIFFICULTY_CODE = 1000;
     final int OPEN_OPTIONS_CODE = 2000;
+    final int OPEN_PROFILE_CODE = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +49,15 @@ public class MainMenu extends AppCompatActivity {
         Intent getOptionsIntent = new Intent(this, OptionsScreen.class);
         //startActivity(getOptionsIntent);
        startActivityForResult(getOptionsIntent,OPEN_OPTIONS_CODE);
+    }
+
+    public void openProfile(View view) {
+        Intent getProfileIntent = new Intent(this, ProfileScreen.class);
+        //startActivity(getOptionsIntent);
+        startActivityForResult(getProfileIntent,OPEN_PROFILE_CODE);
+    }
+
+    public void quitGame(View view) {
+        finish();
     }
 }
