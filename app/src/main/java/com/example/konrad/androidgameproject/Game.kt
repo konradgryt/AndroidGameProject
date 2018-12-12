@@ -17,6 +17,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
+import com.example.konrad.androidgameproject.Utility.encodeTobase64
 import kotlinx.android.synthetic.main.activity_game.*
 
 class Game : AppCompatActivity() {
@@ -26,12 +27,19 @@ class Game : AppCompatActivity() {
     var correctPerson: Person? = null
     var numberOfTimesUserAnsweredCorrectly: Int = 0
     var userAnsweredIncorrectly: Int = 0
+    var currentScore: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        Log.i("WHAT", "well")
+        val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
+        val currentAvatar = shared.getString("currentAvatar", "empty")
+        val currentNickname = shared.getString("currentNickname", "player")
+
+        txtHighScore.text = shared.getInt("highscore", 0).toString()
+
+
         btnNextPlant.setOnClickListener{
             if (checkForInternetConnection()) {
                 var difficulty = intent.getStringExtra("DIFFICULTY")
@@ -122,7 +130,6 @@ class Game : AppCompatActivity() {
         button3.background = backgroundpic
         button4.background = backgroundpic
     }
-
     fun button1IsClicked(buttonView: View)  {
         evaluateAnswer(0)
     }
@@ -233,6 +240,17 @@ class Game : AppCompatActivity() {
             }
         } else {
             numberOfTimesUserAnsweredCorrectly++
+            currentScore++
+            val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
+            val editor = shared.edit()
+            var highscore = shared.getInt("highscore", 0)
+            if (currentScore > highscore) {
+                editor.putInt("highscore", currentScore)
+                editor.apply()
+                txtHighScore.setText(currentScore.toString())
+            }
+            txtCurrentScore.setText(currentScore.toString())
+
             txtRightAnswers.text = "$numberOfTimesUserAnsweredCorrectly"
             txtState.text = "Right!"
 

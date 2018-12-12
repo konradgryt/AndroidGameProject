@@ -1,17 +1,25 @@
 package com.example.konrad.androidgameproject;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static android.support.v4.os.LocaleListCompat.create;
 
 public class OptionsScreen extends Activity {
 
@@ -90,11 +98,11 @@ public class OptionsScreen extends Activity {
         }
     }
 
-
     public void resetData(View view) {
         SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
         Editor editor = shared.edit();
         editor.clear();
         editor.apply();
+        Toast.makeText(this,"DATA RESETED", Toast.LENGTH_SHORT).show();
     }
 }
