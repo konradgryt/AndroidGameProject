@@ -1,30 +1,72 @@
 package com.example.konrad.androidgameproject;
 
-import android.content.ComponentName;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class MainMenu extends AppCompatActivity {
     final int OPEN_DIFFICULTY_CODE = 1000;
     final int OPEN_OPTIONS_CODE = 2000;
     final int OPEN_PROFILE_CODE = 3000;
+    ImageView imgViewMenuAvatar;
+    TextView txtViewMenuAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
+        String currentAvatar = shared.getString("currentAvatar", "empty");
+        String currentNickname = shared.getString("currentNickname", "player");
+
+        imgViewMenuAvatar = findViewById(R.id.imgViewMenuAvatar);
+        if (currentAvatar != "empty") {
+            imgViewMenuAvatar.setImageBitmap(Utility.decodeBase64(currentAvatar));
+        } else {
+            imgViewMenuAvatar.setImageResource(R.drawable.placeholder);
+        }
+
+        txtViewMenuAvatar = findViewById(R.id.txtViewMenuAvatar);
+        txtViewMenuAvatar.setText(currentNickname);
+        Log.i("Well", currentNickname);
+        Log.i("Well", txtViewMenuAvatar.getText().toString());
+
         try {
           Intent sound = new Intent(this, SoundService.class);
           startService(sound);
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
+        String currentAvatar = shared.getString("currentAvatar", "empty");
+        String currentNickname = shared.getString("currentNickname", "player");
+
+        imgViewMenuAvatar = findViewById(R.id.imgViewMenuAvatar);
+        if (currentAvatar != "empty") {
+            imgViewMenuAvatar.setImageBitmap(Bitmap.createScaledBitmap(Utility.decodeBase64(currentAvatar),100,100,false));
+        } else {
+            imgViewMenuAvatar.setImageResource(R.drawable.placeholder);
+        }
+
+        txtViewMenuAvatar = findViewById(R.id.txtViewMenuAvatar);
+        txtViewMenuAvatar.setText(currentNickname);
+        Log.i("Well", currentNickname);
+        Log.i("Well", txtViewMenuAvatar.getText().toString());
     }
 
     @Override
@@ -38,9 +80,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void startGame(View vew) {
-//        Intent getGameIntent = new Intent(this, Game.class);
-//        final int result = 1;
-//        startActivityForResult(getGameIntent,result);
         Intent getGameIntent = new Intent(this, Difficulty.class);
         startActivityForResult(getGameIntent,OPEN_DIFFICULTY_CODE);
     }
@@ -58,6 +97,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void quitGame(View view) {
-        finish();
+        System.exit(1);
     }
 }

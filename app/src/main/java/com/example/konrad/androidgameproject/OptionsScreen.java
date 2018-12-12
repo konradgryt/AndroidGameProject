@@ -2,6 +2,8 @@ package com.example.konrad.androidgameproject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,5 +88,13 @@ public class OptionsScreen extends Activity {
             optionsLayout.setBackgroundColor(Color.DKGRAY);
             isDarkModeOn = false;
         }
+    }
+
+
+    public void resetData(View view) {
+        SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
+        Editor editor = shared.edit();
+        editor.clear();
+        editor.apply();
     }
 }

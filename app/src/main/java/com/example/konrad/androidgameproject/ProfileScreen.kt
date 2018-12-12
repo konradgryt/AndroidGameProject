@@ -3,25 +3,15 @@ package com.example.konrad.androidgameproject
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_display_profile.*
-import android.R.attr.bitmap
-import android.content.ContextWrapper
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.os.Environment
 import android.util.Log
-import android.os.Environment.getExternalStorageDirectory
+import java.io.*
 import android.graphics.BitmapFactory
-import android.net.Uri
-import android.support.v4.content.ContextCompat
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import java.util.*
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Base64.*
 
 
 class ProfileScreen : AppCompatActivity() {
@@ -32,28 +22,32 @@ class ProfileScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_profile)
 
-        button666.setOnClickListener{
-            // Save the image in internal storage and get the uri
-            val uri:Uri = saveImageToInternalStorage(R.drawable.placeholder)
+        val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
+        val currentAvatar = shared.getString("currentAvatar", "empty")
+        val currentNickname = shared.getString("currentNickname", "player")
 
-            // Display the internal storage saved image in image view
-            image_view_saved.setImageURI(uri)
-
-            // Show the saved image uri
-            textview666.text = "Saved: $uri"
-        }
-//        val photoPath = "${Environment.getExternalStorageDirectory()}/avatar.jpg"
-//        val options = BitmapFactory.Options()
-//        options.inPreferredConfig = Bitmap.Config.ARGB_8888
-//        val bitmap = BitmapFactory.decodeFile(photoPath, options)
-
-
-     //   Log.i("PLS", bitmap.toString())
-        if (savedBitmap != null) {
-            imgProfilePicture?.setImageBitmap(savedBitmap)
+        txtProfileNickname.setText(currentNickname)
+        if (currentAvatar != "empty") {
+            imgProfilePicture?.setImageBitmap(resizeBitmap(decodeBase64(currentAvatar!!), 250, 250))
         } else {
             imgProfilePicture?.setImageResource(R.drawable.placeholder)
         }
+
+
+        txtProfileNickname?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                val editor = getSharedPreferences("App_settings", MODE_PRIVATE).edit()
+                editor.putString("currentNickname", p0.toString())
+                editor.apply()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
 
         btnProfileOpenCamera?.setOnClickListener{
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -66,13 +60,33 @@ class ProfileScreen : AppCompatActivity() {
         }
     }
 
+    //bitmap to base64
+    fun encodeTobase64(image: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val b = baos.toByteArray()
+        val imageEncoded = encodeToString(b, DEFAULT)
+        Log.d("Image Log:", imageEncoded)
+        return imageEncoded
+    }
+
+    //base 64 to bitmap
+    fun decodeBase64(input: String): Bitmap {
+        val decodedByte = decode(input, 0)
+        return BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.size)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == OPEN_CAMERA_BUTTON_REQUEST_ID) {
             if (resultCode == RESULT_OK) {
                 val imageData = data?.extras?.get("data") as Bitmap
                 imgProfilePicture?.setImageBitmap(imageData)
-                savedBitmap = imageData
+                val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
+                val editor = shared.edit()
+                editor.putString("currentAvatar", encodeTobase64(imageData))
+                editor.apply()
             }
         }
         if (requestCode == OPEN_GALLERY_BUTTON_REQUEST_ID) {
@@ -80,50 +94,20 @@ class ProfileScreen : AppCompatActivity() {
                 val contentURI = data?.data
                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                 imgProfilePicture?.setImageBitmap(bitmap)
-                savedBitmap = bitmap
+                val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
+                val editor = shared.edit()
+                editor.putString("currentAvatar", encodeTobase64(bitmap))
+                editor.apply()
             }
         }
     }
 
-    private fun saveImageToInternalStorage(drawableId:Int): Uri{
-        // Get the image from drawable resource as drawable object
-        val drawable = ContextCompat.getDrawable(applicationContext,drawableId)
-
-        // Get the bitmap from drawable object
-        val bitmap = (drawable as BitmapDrawable).bitmap
-
-        // Get the context wrapper instance
-        val wrapper = ContextWrapper(applicationContext)
-
-        // Initializing a new file
-        // The bellow line return a directory in internal storage
-        var file = wrapper.getDir("images", MODE_PRIVATE)
-
-
-        // Create a file to save the image
-        file = File(file, "${UUID.randomUUID()}.jpg")
-
-        try {
-            // Get the file output stream
-            val stream: OutputStream = FileOutputStream(file)
-
-            // Compress bitmap
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-
-            // Flush the stream
-            stream.flush()
-
-            // Close stream
-            stream.close()
-        } catch (e: IOException){ // Catch the exception
-            e.printStackTrace()
-        }
-
-        // Return the saved image uri
-        return Uri.parse(file.absolutePath)
-    }
-
-    companion object {
-        var savedBitmap: Bitmap? = null
+    private fun resizeBitmap(bitmap:Bitmap, width:Int, height:Int):Bitmap{
+        return Bitmap.createScaledBitmap(
+                bitmap,
+                width,
+                height,
+                false
+        )
     }
 }
