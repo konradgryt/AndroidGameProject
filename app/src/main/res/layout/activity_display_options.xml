@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/optionsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,201 +9,104 @@
     android:background="#000000"
     android:gravity="center">
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:weightSum="200">
-
-        <TextView
-            android:id="@+id/txtOptions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="198"
-            android:gravity="center"
-            android:text="Options"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/txtOptions"
+        android:layout_width="239dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="198"
+        android:background="@drawable/options"
         android:gravity="center"
-        android:weightSum="3">
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtOptionsPlayerName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="New name"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+    <ImageView
+        android:id="@+id/btnOptionsMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/active"
+        android:contentDescription="@string/dark_mode"
+        android:onClick="onClickMusic"
+        app:layout_constraintBottom_toTopOf="@+id/txtOptionsVibrations"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/txtPlayerName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="#FFFFFF" />
-    </TableRow>
+    <TextView
+        android:id="@+id/txtOptionsMusic"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/music"
         android:gravity="center"
-        android:weightSum="3">
+        android:onClick="onClickMusic"
+        app:layout_constraintBottom_toTopOf="@+id/btnOptionsMusic"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/txtOptionsMusic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/music"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+    <ImageView
+        android:id="@+id/btnOptionsVibrations"
+        android:layout_width="wrap_content"
+        android:layout_height="92dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/disabled"
+        android:contentDescription="@string/dark_mode"
+        android:onClick="onClickVibrations"
+        app:layout_constraintBottom_toTopOf="@+id/txtOptionsAnimations"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btnOptionsMusic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClickMusic"
-            android:text="@string/button_on" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/txtOptionsVibrations"
+        android:layout_width="192dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/vibrations"
         android:gravity="center"
-        android:weightSum="3">
+        android:onClick="onClickVibrations"
+        app:layout_constraintBottom_toTopOf="@+id/btnOptionsVibrations"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/txtOptionsDarkMode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/dark_mode"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btnOptionsDarkMode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClickDarkMode"
-            android:text="@string/button_on" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/txtOptionsAnimations"
+        android:layout_width="199dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/animations"
         android:gravity="center"
-        android:weightSum="3">
+        android:onClick="onClickAnimations"
+        app:layout_constraintBottom_toTopOf="@+id/btnOptionsAnimations"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/txtOptionsAnimations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Animations"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+    <ImageView
+        android:id="@+id/btnOptionsAnimations"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/active"
+        android:contentDescription="@string/dark_mode"
+        android:onClick="onClickAnimations"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btnOptionsAnimations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="On" />
-    </TableRow>
+    <Button
+        android:id="@+id/btnOptionsResetData"
+        android:layout_width="140dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/resetdata"
+        android:onClick="resetData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOptions" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:weightSum="3">
 
-        <TextView
-            android:id="@+id/txtOptionsVibrations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Vibrations"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btnOptionsVibrations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onClickVibrations"
-            android:text="On" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:weightSum="3">
-
-        <TextView
-            android:id="@+id/txtOptionsResetData"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Reset data"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btnOptionsResetData"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="resetData"
-            android:text="Reset" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:weightSum="11">
-
-        <Button
-            android:id="@+id/btnOptionsCancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:onClick="cancelOptions"
-            android:text="Cancel"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnOptionsConfirm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:onClick="confirmOptions"
-            android:text="Confirm"
-            android:textSize="12sp" />
-    </TableRow>
-</TableLayout>
+</android.support.constraint.ConstraintLayout>

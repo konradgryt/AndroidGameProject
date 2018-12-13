@@ -1,107 +1,89 @@
 package com.example.konrad.androidgameproject;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
-import android.support.v7.app.AlertDialog;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.os.Vibrator;
-
-import static android.support.v4.os.LocaleListCompat.create;
 
 public class OptionsScreen extends Activity {
 
     static boolean isMusicOn = true;
-    static boolean isDarkModeOn = true;
-    Button btnOptionMusic;
-    Button btnOptionsDarkMode;
-    TableLayout optionsLayout;
+    static boolean areVibrationsOn = false;
+    static boolean areAnimationsOn = true;
+    ImageView btnOptionsMusic;
+    ImageView btnOptionsVibrations;
+    ImageView btnOptionsAnimations;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_display_options);
 
+        Drawable active = getResources().getDrawable( R.drawable.active );
+        Drawable disabled = getResources().getDrawable( R.drawable.disabled);
         //Music
-        btnOptionMusic = findViewById(R.id.btnOptionsMusic);
+        btnOptionsMusic = findViewById(R.id.btnOptionsMusic);
         if (isMusicOn) {
-            btnOptionMusic.setText(R.string.button_on);
+            btnOptionsMusic.setBackground(active);
         } else if (!isMusicOn) {
-            btnOptionMusic.setText(R.string.button_off);
+            btnOptionsMusic.setBackground(disabled);
         }
 
-        //Dark mode
-        btnOptionsDarkMode = findViewById(R.id.btnOptionsDarkMode);
-        optionsLayout = findViewById(R.id.optionsLayout);
-        if (isDarkModeOn) {
-            optionsLayout.setBackgroundColor(Color.BLACK);
-            btnOptionsDarkMode.setText(R.string.button_on);
-        } else if (!isDarkModeOn) {
-            optionsLayout.setBackgroundColor(Color.DKGRAY);
-            btnOptionsDarkMode.setText(R.string.button_off);
+        //Vibrations
+        btnOptionsVibrations = findViewById(R.id.btnOptionsVibrations);
+        if (areVibrationsOn) {
+            btnOptionsVibrations.setBackground(active);
+        } else if (!areVibrationsOn) {
+            btnOptionsVibrations.setBackground(disabled);
         }
-    }
 
-    public void confirmOptions(View view) {
-        EditText playerNameEditText = findViewById(R.id.txtPlayerName);
-        String playerNameString = String.valueOf(playerNameEditText.getText());
-        Intent goBack = new Intent();
-        goBack.putExtra("PlayerName", playerNameString);
-        setResult(RESULT_OK, goBack);
-        finish();
-    }
-
-    public void cancelOptions(View view) {
-        setResult(RESULT_OK);
-        finish();
+        //Animations
+        btnOptionsAnimations = findViewById(R.id.btnOptionsAnimations);
+        if (areAnimationsOn) {
+            btnOptionsAnimations.setBackground(active);
+        } else if (!areAnimationsOn) {
+            btnOptionsAnimations.setBackground(active);
+        }
     }
 
     public void onClickMusic(View view) {
         Intent sound = new Intent(this, SoundService.class);
-        if (btnOptionMusic.getText().toString().equals("Off")) {
-            btnOptionMusic.setText(getString(R.string.button_on));
+        if (!isMusicOn) {
+            Drawable active = getResources().getDrawable( R.drawable.active );
+            btnOptionsMusic.setBackground(active);
             try {
                 startService(sound);
                 isMusicOn = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (btnOptionMusic.getText().toString().equals("On")) {
-            btnOptionMusic.setText(getString(R.string.button_off));
+        } else if (isMusicOn) {
+            Drawable disabled = getResources().getDrawable( R.drawable.disabled );
+            btnOptionsMusic.setBackground(disabled);
             stopService(sound);
             isMusicOn = false;
         }
     }
-
-    public void onClickDarkMode(View view) {
-        optionsLayout = findViewById(R.id.optionsLayout);
-        if (btnOptionsDarkMode.getText().toString().equals("Off")) {
-            btnOptionsDarkMode.setText(getString(R.string.button_on));
-            optionsLayout.setBackgroundColor(Color.BLACK);
-            isDarkModeOn = true;
-        } else if (btnOptionsDarkMode.getText().toString().equals("On")) {
-            btnOptionsDarkMode.setText(getString(R.string.button_off));
-            optionsLayout.setBackgroundColor(Color.DKGRAY);
-            isDarkModeOn = false;
-        }
-    }
-
     public void onClickVibrations(View view) {
+        if (!areVibrationsOn) {
+            Drawable active = getResources().getDrawable( R.drawable.active );
+            btnOptionsVibrations.setBackground(active);
+            areVibrationsOn = true;
+        } else if (areVibrationsOn) {
+            Drawable disabled = getResources().getDrawable( R.drawable.disabled );
+            btnOptionsVibrations.setBackground(disabled);
+            areVibrationsOn = false;
+        }
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -109,6 +91,19 @@ public class OptionsScreen extends Activity {
             v.vibrate(500);
         }
     }
+
+    public void onClickAnimations(View view) {
+        if (!areAnimationsOn) {
+            Drawable active = getResources().getDrawable( R.drawable.active );
+            btnOptionsAnimations.setBackground(active);
+            areAnimationsOn = true;
+        } else if (areAnimationsOn) {
+            Drawable disabled = getResources().getDrawable( R.drawable.disabled );
+            btnOptionsAnimations.setBackground(disabled);
+            areAnimationsOn = false;
+        }
+    }
+
 
     public void resetData(View view) {
         SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
