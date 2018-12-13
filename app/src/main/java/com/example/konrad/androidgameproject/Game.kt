@@ -28,10 +28,17 @@ class Game : AppCompatActivity() {
     var numberOfTimesUserAnsweredCorrectly: Int = 0
     var userAnsweredIncorrectly: Int = 0
     var currentScore: Int = 0
+    var quizState: QUIZ_STATE = QUIZ_STATE.WAITING
+
+    enum class QUIZ_STATE {
+        WAITING, ANSWERED
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+        txtState.text = "Click 'generate question' when you are ready!"
 
         val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
         val currentAvatar = shared.getString("currentAvatar", "empty")
@@ -51,12 +58,14 @@ class Game : AppCompatActivity() {
     }
 
     fun generateQuiz(difficulty: String) {
+        quizState = QUIZ_STATE.WAITING
+        txtState.text = "Select right person"
         val questionData = intent.getSerializableExtra("PEOPLE") as Array<Person>
         val numberOfPeopleInBank = questionData.size
 
         if (difficulty == "Easy" && numberOfPeopleInBank > 0) {
-            button3.setVisibility(View.GONE)
-            button4.setVisibility(View.GONE)
+            button1.setVisibility(View.VISIBLE)
+            button2.setVisibility(View.VISIBLE)
             val randomIndexForButton1: Int = (Math.random() * questionData.size).toInt()
             var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
             while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
@@ -76,13 +85,15 @@ class Game : AppCompatActivity() {
 
         }
         else if (difficulty == "Normal" && numberOfPeopleInBank > 0) {
-            button4.setVisibility(View.GONE)
+            button1.setVisibility(View.VISIBLE)
+            button2.setVisibility(View.VISIBLE)
+            button3.setVisibility(View.VISIBLE)
             val randomIndexForButton1: Int = (Math.random() * questionData.size).toInt()
             var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
             var randomIndexForButton3: Int = (Math.random() * questionData.size).toInt()
             while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
                 randomIndexForButton2 = (Math.random() * questionData.size).toInt()
-                while (randomIndexForButton2 == randomIndexForButton3) { //randomize again
+                while (randomIndexForButton2 == randomIndexForButton3 || randomIndexForButton1 == randomIndexForButton3) { //randomize again
                     randomIndexForButton3 = (Math.random() * questionData.size).toInt()
                 }
             }
@@ -101,28 +112,41 @@ class Game : AppCompatActivity() {
             downloadingImageTask.execute(possibleAnswers.get(correctAnswerIndex).name)
 
         }
-        else if (numberOfPeopleInBank > 0) {
-            var randomPlantIndexForButton1: Int = (Math.random() * questionData.size).toInt()
-            var randomPlantIndexForButton2: Int = (Math.random() * questionData.size).toInt()
-            var randomPlantIndexForButton3: Int = (Math.random() * questionData.size).toInt()
-            var randomPlantIndexForButton4: Int = (Math.random() * questionData.size).toInt()
+        else if (difficulty == "Hard" && numberOfPeopleInBank > 0) {
+            button1.setVisibility(View.VISIBLE)
+            button2.setVisibility(View.VISIBLE)
+            button3.setVisibility(View.VISIBLE)
+            button4.setVisibility(View.VISIBLE)
+            var randomIndexForButton1: Int = (Math.random() * questionData.size).toInt()
+            var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
+            var randomIndexForButton3: Int = (Math.random() * questionData.size).toInt()
+            var randomIndexForButton4: Int = (Math.random() * questionData.size).toInt()
+            while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
+                randomIndexForButton2 = (Math.random() * questionData.size).toInt()
+                while (randomIndexForButton2 == randomIndexForButton3 || randomIndexForButton1 == randomIndexForButton3) { //randomize again
+                    randomIndexForButton3 = (Math.random() * questionData.size).toInt()
+                    while (randomIndexForButton3 == randomIndexForButton4 || randomIndexForButton2 == randomIndexForButton4|| randomIndexForButton1 == randomIndexForButton4) { //randomize again
+                        randomIndexForButton4 = (Math.random() * questionData.size).toInt()
+                    }
+                }
+            }
 
-            var allRandomPlants = ArrayList<Person>()
-            allRandomPlants.add(questionData.get(randomPlantIndexForButton1))
-            allRandomPlants.add(questionData.get(randomPlantIndexForButton2))
-            allRandomPlants.add(questionData.get(randomPlantIndexForButton3))
-            allRandomPlants.add(questionData.get(randomPlantIndexForButton4))
 
-            button1.text = questionData.get(randomPlantIndexForButton1).toString()
-            button2.text = questionData.get(randomPlantIndexForButton2).toString()
-            button3.text = questionData.get(randomPlantIndexForButton3).toString()
-            button4.text = questionData.get(randomPlantIndexForButton4).toString()
+            val possibleAnswers = ArrayList<Person>()
+            possibleAnswers.add(questionData.get(randomIndexForButton1))
+            possibleAnswers.add(questionData.get(randomIndexForButton2))
+            possibleAnswers.add(questionData.get(randomIndexForButton3))
+            possibleAnswers.add(questionData.get(randomIndexForButton4))
+            button1.text = questionData.get(randomIndexForButton1).toString()
+            button2.text = questionData.get(randomIndexForButton2).toString()
+            button3.text = questionData.get(randomIndexForButton3).toString()
+            button4.text = questionData.get(randomIndexForButton4).toString()
 
-            correctAnswerIndex = (Math.random() * allRandomPlants.size).toInt()
-            correctPerson = allRandomPlants.get(correctAnswerIndex)
+            correctAnswerIndex = (Math.random() * possibleAnswers.size).toInt()
+            correctPerson = possibleAnswers.get(correctAnswerIndex)
 
             val downloadingImageTask = DownloadingImageTask()
-            downloadingImageTask.execute(allRandomPlants.get(correctAnswerIndex).name)
+            downloadingImageTask.execute(possibleAnswers.get(correctAnswerIndex).name)
         }
         var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox)
         button1.background = backgroundpic
@@ -131,19 +155,27 @@ class Game : AppCompatActivity() {
         button4.background = backgroundpic
     }
     fun button1IsClicked(buttonView: View)  {
-        evaluateAnswer(0)
+        if (quizState == QUIZ_STATE.WAITING) {
+            evaluateAnswer(0)
+        }
     }
 
     fun button2IsClicked(buttonView: View) {
-        evaluateAnswer(1)
+        if (quizState == QUIZ_STATE.WAITING) {
+            evaluateAnswer(1)
+        }
     }
 
     fun button3IsClicked(buttonView: View) {
-        evaluateAnswer(2)
+        if (quizState == QUIZ_STATE.WAITING) {
+            evaluateAnswer(2)
+        }
     }
 
     fun button4IsClicked(buttonView: View) {
-        evaluateAnswer(3)
+        if (quizState == QUIZ_STATE.WAITING) {
+            evaluateAnswer(3)
+        }
     }
 
     override fun onStart() {
@@ -225,11 +257,12 @@ class Game : AppCompatActivity() {
     }
 
     private fun evaluateAnswer(userGuess: Int) {
+        quizState = QUIZ_STATE.ANSWERED
         if (userGuess != correctAnswerIndex) {
             userAnsweredIncorrectly++
             txtWrongAnswers.text = "$userAnsweredIncorrectly"
             var correctPlantName = correctPerson.toString()
-            txtState.text = "Wrong. Choose : $correctPlantName"
+            txtState.text = "Wrong. Right answer: $correctPlantName"
 
             var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox_wrong)
             when (userGuess) {
@@ -252,7 +285,7 @@ class Game : AppCompatActivity() {
             txtCurrentScore.setText(currentScore.toString())
 
             txtRightAnswers.text = "$numberOfTimesUserAnsweredCorrectly"
-            txtState.text = "Right!"
+            txtState.text = "Right answer!"
 
             var backgroundpic2 = ContextCompat.getDrawable(this, R.drawable.answerbox_correct)
             when (correctAnswerIndex) {

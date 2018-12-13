@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.support.v7.app.AlertDialog;
 import android.provider.Settings;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import static android.support.v4.os.LocaleListCompat.create;
 
@@ -95,6 +98,15 @@ public class OptionsScreen extends Activity {
             btnOptionsDarkMode.setText(getString(R.string.button_off));
             optionsLayout.setBackgroundColor(Color.DKGRAY);
             isDarkModeOn = false;
+        }
+    }
+
+    public void onClickVibrations(View view) {
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            v.vibrate(500);
         }
     }
 
