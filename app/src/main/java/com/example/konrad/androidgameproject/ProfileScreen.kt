@@ -28,9 +28,10 @@ class ProfileScreen : AppCompatActivity() {
 
         txtProfileNickname.setText(currentNickname)
         if (currentAvatar != "empty") {
-            imgProfilePicture?.setImageBitmap(resizeBitmap(decodeBase64(currentAvatar!!), 250, 250))
+            imgProfilePicture?.setImageBitmap(resizeBitmap(decodeBase64(currentAvatar!!), 300, 300))
         } else {
-            imgProfilePicture?.setImageResource(R.drawable.placeholder)
+            val placeholder = BitmapFactory.decodeResource(resources, R.drawable.placeholder)
+            imgProfilePicture?.setImageBitmap(Bitmap.createScaledBitmap(placeholder, 300, 300, false))
         }
 
 
@@ -82,7 +83,7 @@ class ProfileScreen : AppCompatActivity() {
         if (requestCode == OPEN_CAMERA_BUTTON_REQUEST_ID) {
             if (resultCode == RESULT_OK) {
                 val imageData = data?.extras?.get("data") as Bitmap
-                imgProfilePicture?.setImageBitmap(imageData)
+                imgProfilePicture?.setImageBitmap(Bitmap.createScaledBitmap(imageData, 300, 300, false))
                 val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
                 val editor = shared.edit()
                 editor.putString("currentAvatar", encodeTobase64(imageData))
@@ -93,7 +94,7 @@ class ProfileScreen : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 val contentURI = data?.data
                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-                imgProfilePicture?.setImageBitmap(bitmap)
+                imgProfilePicture?.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 300, 300, false))
                 val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
                 val editor = shared.edit()
                 editor.putString("currentAvatar", encodeTobase64(bitmap))

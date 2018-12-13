@@ -4,6 +4,8 @@ package com.example.konrad.androidgameproject;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ public class MainMenu extends AppCompatActivity {
     final int OPEN_DIFFICULTY_CODE = 1000;
     final int OPEN_OPTIONS_CODE = 2000;
     final int OPEN_PROFILE_CODE = 3000;
+    final int OPEN_CATEGORIES_CODE = 7000;
     ImageView imgViewMenuAvatar;
     TextView txtViewMenuAvatar;
 
@@ -27,13 +30,14 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
         String currentAvatar = shared.getString("currentAvatar", "empty");
-        String currentNickname = shared.getString("currentNickname", "player");
+        String currentNickname = shared.getString("currentNickname", "Your nickname");
 
         imgViewMenuAvatar = findViewById(R.id.imgViewMenuAvatar);
         if (currentAvatar != "empty") {
             imgViewMenuAvatar.setImageBitmap(Utility.decodeBase64(currentAvatar));
         } else {
-            imgViewMenuAvatar.setImageResource(R.drawable.placeholder);
+            Bitmap placeholder = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+            imgViewMenuAvatar.setImageBitmap(Bitmap.createScaledBitmap(placeholder,150,150,false));
         }
 
         txtViewMenuAvatar = findViewById(R.id.txtViewMenuAvatar);
@@ -54,13 +58,14 @@ public class MainMenu extends AppCompatActivity {
         super.onResume();
         SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
         String currentAvatar = shared.getString("currentAvatar", "empty");
-        String currentNickname = shared.getString("currentNickname", "player");
+        String currentNickname = shared.getString("currentNickname", "Your nickname");
 
         imgViewMenuAvatar = findViewById(R.id.imgViewMenuAvatar);
         if (currentAvatar != "empty") {
-            imgViewMenuAvatar.setImageBitmap(Bitmap.createScaledBitmap(Utility.decodeBase64(currentAvatar),100,100,false));
+            imgViewMenuAvatar.setImageBitmap(Bitmap.createScaledBitmap(Utility.decodeBase64(currentAvatar),150,150,false));
         } else {
-            imgViewMenuAvatar.setImageResource(R.drawable.placeholder);
+            Bitmap placeholder = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+            imgViewMenuAvatar.setImageBitmap(Bitmap.createScaledBitmap(placeholder,150,150,false));
         }
 
         txtViewMenuAvatar = findViewById(R.id.txtViewMenuAvatar);
@@ -69,19 +74,15 @@ public class MainMenu extends AppCompatActivity {
         Log.i("Well", txtViewMenuAvatar.getText().toString());
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        TextView txtMenuPlayerName = findViewById(R.id.txtMenuPlayerName);
-        if (data != null) {
-            String playerName = data.getStringExtra("PlayerName");
-            txtMenuPlayerName.setText(playerName);
-        }
-    }
-
     public void startGame(View vew) {
         Intent getGameIntent = new Intent(this, Difficulty.class);
         startActivityForResult(getGameIntent,OPEN_DIFFICULTY_CODE);
+    }
+
+    public void openCategories(View view) {
+        Intent getOptionsIntent = new Intent(this, Category.class);
+        //startActivity(getOptionsIntent);
+        startActivityForResult(getOptionsIntent,OPEN_CATEGORIES_CODE);
     }
 
     public void openOptions(View view) {
