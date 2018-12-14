@@ -1,13 +1,13 @@
 package com.example.konrad.androidgameproject.GUI
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.os.AsyncTask
-import android.os.Bundle
+import android.os.*
 import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -18,6 +18,8 @@ import com.example.konrad.androidgameproject.Model.Entry
 import com.example.konrad.androidgameproject.Model.TYPE
 import com.example.konrad.androidgameproject.R
 import com.example.konrad.androidgameproject.Service.DownloadingObject
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
 
@@ -39,7 +41,22 @@ class Game : AppCompatActivity() {
         WAITING, ANSWERED
     }
 
+    private fun playAnimationOnView(view: View?, technique: Techniques) {
+        if (Options.areAnimationsOn) {
+            YoYo.with(technique).duration(500).repeat(0).playOn(view)
+        }
+    }
 
+    private fun vibrate() {
+        if (Options.areVibrationsOn) {
+            val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                v.vibrate(500)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +73,7 @@ class Game : AppCompatActivity() {
             generateQuiz(level, selectCategory(Category.getActiveCategories()))
         }
         btnNextQuestion.setOnClickListener{
+            playAnimationOnView(btnNextQuestion, Techniques.Pulse)
             if (checkForInternetConnection()) {
                 generateQuiz(level, selectCategory(Category.getActiveCategories()))
             }
@@ -175,24 +193,28 @@ class Game : AppCompatActivity() {
     }
     fun button1IsClicked(buttonView: View)  {
         if (quizState == QUIZ_STATE.WAITING) {
+            playAnimationOnView(buttonView, Techniques.Pulse)
             evaluateAnswer(0)
         }
     }
 
     fun button2IsClicked(buttonView: View) {
         if (quizState == QUIZ_STATE.WAITING) {
+            playAnimationOnView(buttonView, Techniques.Pulse)
             evaluateAnswer(1)
         }
     }
 
     fun button3IsClicked(buttonView: View) {
         if (quizState == QUIZ_STATE.WAITING) {
+            playAnimationOnView(buttonView, Techniques.Pulse)
             evaluateAnswer(2)
         }
     }
 
     fun button4IsClicked(buttonView: View) {
         if (quizState == QUIZ_STATE.WAITING) {
+            playAnimationOnView(buttonView, Techniques.Pulse)
             evaluateAnswer(3)
         }
     }
@@ -246,6 +268,7 @@ class Game : AppCompatActivity() {
     private fun evaluateAnswer(userGuess: Int) {
         quizState = QUIZ_STATE.ANSWERED
         if (userGuess != correctAnswerIndex) {
+            vibrate()
             userAnsweredIncorrectly++
             txtWrongAnswers.text = "$userAnsweredIncorrectly"
             var correctEntryName = correctEntry.toString()
@@ -269,6 +292,15 @@ class Game : AppCompatActivity() {
                 }
                 3 -> button4hard.setBackground(answerboxWrongDrawable)
             }
+            if (currentScore > 0) {
+                when(level) {
+                    LEVEL.EASY -> currentScore--
+                    LEVEL.NORMAL -> currentScore -= 2
+                    LEVEL.HARD -> currentScore -= 3
+                    LEVEL.VERY_HARD -> currentScore -= 4
+                }
+            }
+            playAnimationOnView(txtCurrentScore,Techniques.Shake)
         } else {
             numberOfTimesUserAnsweredCorrectly++
             when(level) {
@@ -284,6 +316,7 @@ class Game : AppCompatActivity() {
                 editor.putInt("highscore", currentScore)
                 editor.apply()
                 txtHighScore.setText(currentScore.toString())
+                playAnimationOnView(txtHighScore,Techniques.Pulse)
             }
 
 
@@ -308,6 +341,7 @@ class Game : AppCompatActivity() {
                 }
                 3 -> button4hard.setBackground(answerboxCorrectDrawable)
             }
+            playAnimationOnView(txtCurrentScore,Techniques.Pulse)
         }
         txtCurrentScore.text = currentScore.toString()
     }

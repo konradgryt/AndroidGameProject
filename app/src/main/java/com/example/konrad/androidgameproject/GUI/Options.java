@@ -55,7 +55,7 @@ public class Options extends Activity {
         if (areAnimationsOn) {
             btnOptionsAnimations.setBackground(active);
         } else if (!areAnimationsOn) {
-            btnOptionsAnimations.setBackground(active);
+            btnOptionsAnimations.setBackground(disabled);
         }
     }
 
@@ -82,16 +82,16 @@ public class Options extends Activity {
             Drawable active = getResources().getDrawable( R.drawable.active );
             btnOptionsVibrations.setBackground(active);
             areVibrationsOn = true;
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                v.vibrate(500);
+            }
         } else if (areVibrationsOn) {
             Drawable disabled = getResources().getDrawable( R.drawable.disabled );
             btnOptionsVibrations.setBackground(disabled);
             areVibrationsOn = false;
-        }
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            v.vibrate(500);
         }
     }
 

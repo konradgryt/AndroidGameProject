@@ -9,8 +9,8 @@
     <string name="hint"> </string>
     <string name="dark_mode">No content description for now</string>
     <string name="current_player">Player</string>
-    <string name="padawan_difficulty">Two answers to select from\n1 point per right answer\nTotal bank of 10 cards per category</string>
-    <string name="jedi_difficulty">Three answers to select from\n2 points per right answer\nTotal bank of 20 cards per category</string>
-    <string name="jedi_knight_difficulty">Four answers to select from\n3 points per right answer\nTotal bank of 30 cards per category</string>
-    <string name="jedi_master_difficulty">Four answers to select from\n4 points per right answer\nFull bank of all cards</string>
+    <string name="padawan_difficulty">Two variants\nTotal bank of 10 cards per category</string>
+    <string name="jedi_difficulty">Three variants\n2 x points\nTotal bank of 20 cards per category</string>
+    <string name="jedi_knight_difficulty">Four variants\n3 x points\nTotal bank of 30 cards per category</string>
+    <string name="jedi_master_difficulty">Four variants\n4 x points\nFull bank of all cards</string>
 </resources>
