@@ -7,14 +7,14 @@ class Planet (var name: String, var rotation_period: String, var orbital_period:
               var diameter: String, var climate: String, var gravity: String, var terrain: String,
                var surface_water: String, var population: String, var residents: ArrayList<String>?,
                var films: ArrayList<String>?, var created: String,
-               var edited: String, var url: String, var id: Int = 1): Serializable {
+               var edited: String, var url: String): Entry(type = "planet") {
 
     constructor(): this("", "", "",
             "","", "",
             "", "", "",  null, null,
             "","", "" )
 
-    fun generateId() {
+    override fun generateId() {
         var regex = Regex("\\D+")
         id = url.replace(regex,"").toInt()
     }

@@ -7,12 +7,12 @@ import java.io.Serializable
 class Person(var name: String, var height: String, var mass: String, var hair_color: String,
              var skin_color: String, var eye_color: String, var birth_year: String, var gender: String,
              var homeworld: String, var films: ArrayList<String>?, var species : ArrayList<String>?,
-            var vehicles: ArrayList<String>?, var starships: ArrayList<String>?, var created: String,
-            var edited: String, var url: String, var id: Int = 1): Serializable {
+             var vehicles: ArrayList<String>?, var starships: ArrayList<String>?, var created: String,
+             var edited: String, var url: String): Entry(type = "person") {
 
     constructor(): this("", "", "", "","", "", "", "", "", null, null, null, null, "", "", "")
 
-    fun generateId() {
+    override fun generateId() {
         var regex = Regex("\\D+")
         id = url.replace(regex,"").toInt()
     }
@@ -22,7 +22,4 @@ class Person(var name: String, var height: String, var mass: String, var hair_co
         return name
     }
 
-    companion object {
-        var currentId = 1
-    }
 }

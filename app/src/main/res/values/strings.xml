@@ -5,8 +5,8 @@
     <string name="music">Music</string>
     <string name="dark_mode">Dark mode</string>
     <string name="current_player">Player</string>
-    <string name="padawan_difficulty">Two answers to select from\n1 point per right answer\nTotal bank of 10 cards</string>
-    <string name="jedi_difficulty">Three answers to select from\n2 points per right answer\nTotal bank of 20 cards</string>
-    <string name="jedi_knight_difficulty">Four answers to select from\n3 points per right answer\nTotal bank of 30 cards</string>
-    <string name="jedi_master_difficulty">No answers to select from\n5 points per right answer\nTotal bank of 30 cards</string>
+    <string name="padawan_difficulty">Two answers to select from\n1 point per right answer\nTotal bank of 10 cards per category</string>
+    <string name="jedi_difficulty">Three answers to select from\n2 points per right answer\nTotal bank of 20 cards per category</string>
+    <string name="jedi_knight_difficulty">Four answers to select from\n3 points per right answer\nTotal bank of 30 cards per category</string>
+    <string name="jedi_master_difficulty">No answers to select from\n5 points per right answer\nTotal bank of 40 cards per category</string>
 </resources>

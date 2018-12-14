@@ -16,18 +16,18 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainMenu">
+        <activity android:name=".GUI.MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OptionsScreen" android:label="Options" android:theme="@style/AppTheme" ></activity>
-        <activity android:name=".ProfileScreen" android:label="Update your profile" android:theme="@style/AppTheme" ></activity>
-        <activity android:name=".Game" android:label="Quiz" android:theme="@style/AppTheme" ></activity>
-        <activity android:name=".Difficulty" android:label="Select your difficulty" android:theme="@style/AppTheme" ></activity>
-        <activity android:name=".Category" android:label="Select active categories" android:theme="@style/AppTheme" ></activity>
-        <service android:name=".SoundService" android:enabled="true"/>
+        <activity android:name=".GUI.Options" android:label="Options" android:theme="@style/AppTheme" ></activity>
+        <activity android:name=".GUI.Profile" android:label="Update your profile" android:theme="@style/AppTheme" ></activity>
+        <activity android:name=".GUI.Game" android:label="Quiz" android:theme="@style/AppTheme" ></activity>
+        <activity android:name=".GUI.Difficulty" android:label="Select your difficulty" android:theme="@style/AppTheme" ></activity>
+        <activity android:name=".GUI.Category" android:label="Select active categories" android:theme="@style/AppTheme" ></activity>
+        <service android:name=".Service.SoundService" android:enabled="true"/>
     </application>
 
 </manifest>
