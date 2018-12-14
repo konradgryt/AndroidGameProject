@@ -92,10 +92,10 @@ class Difficulty : AppCompatActivity() {
                 listOfPlanets = parser.parsePlanetFromJSONData(pages)
             }
             if (Category.areVehiclesOn) {
-               // listOfVehicles = parser.parseVehicleFromJSONData(pages)
+               listOfVehicles = parser.parseVehicleFromJSONData(pages)
             }
             if (Category.areSpeciesOn) {
-             //   listOfSpecies = parser.parseSpeciesFromJSONData(pages)
+                listOfSpecies = parser.parseSpeciesFromJSONData(pages)
             }
             return true
         }
@@ -118,19 +118,20 @@ class Difficulty : AppCompatActivity() {
                 val readyArrayPlanets = planetsList.toArray(array2)
                 gameIntent.putExtra("PLANETS", readyArrayPlanets)
             }
-
-//            val vehiclesList = ArrayList<Vehicle>()
-//            listOfVehicles!!.map { vehicle -> vehiclesList.add(vehicle as Vehicle)  }
-//            val array3 = arrayOfNulls<Vehicle>(listOfVehicles!!.size)
-//            val readyArrayVehicles = vehiclesList.toArray(array3)
-//            gameIntent.putExtra("VEHICLES", readyArrayVehicles)
-//
-//            val speciesList = ArrayList<Species>()
-//            listOfSpecies!!.map { species -> speciesList.add(species as Species)  }
-//            val array4 = arrayOfNulls<Species>(listOfSpecies!!.size)
-//            val readyArraySpecies = vehiclesList.toArray(array4)
-//            gameIntent.putExtra("SPECIES", readyArraySpecies)
-
+            if (Category.areVehiclesOn) {
+                val vehiclesList = ArrayList<Vehicle>()
+                listOfVehicles!!.map { vehicle -> vehiclesList.add(vehicle as Vehicle)  }
+                val array3 = arrayOfNulls<Vehicle>(listOfVehicles!!.size)
+                val readyArrayVehicles = vehiclesList.toArray(array3)
+                gameIntent.putExtra("VEHICLES", readyArrayVehicles)
+            }
+            if (Category.areSpeciesOn) {
+                val speciesList = ArrayList<Species>()
+                listOfSpecies!!.map { species -> speciesList.add(species as Species)  }
+                val array4 = arrayOfNulls<Species>(listOfSpecies!!.size)
+                val readyArraySpecies = speciesList.toArray(array4)
+                gameIntent.putExtra("SPECIES", readyArraySpecies)
+            }
             gameIntent.putExtra("DIFFICULTY", difficulty)
             startActivityForResult(gameIntent, START_GAME)
             setProgressBar(false)

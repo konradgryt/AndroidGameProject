@@ -39,6 +39,31 @@ class CustomParserClass {
         return allPlanetObjects
     }
 
+    fun parseVehicleFromJSONData(pages: Int): List<Vehicle>? {
+        parseVehicleObjectsFromJSONData(vehicleURL, "")
+        if (pages > 1) {
+            for (i in 2..pages) {
+                Log.i("WELL", i.toString())
+                parseVehicleObjectsFromJSONData(vehicleURL, "?page=$i")
+            }
+        }
+        Log.i("WHAT", allVehicleObjects.size.toString())
+        return allVehicleObjects
+    }
+
+    fun parseSpeciesFromJSONData(pages: Int): List<Species>? {
+        parseSpeciesObjectsFromJSONData(speciesURL, "")
+        if (pages > 1) {
+            for (i in 2..pages) {
+                Log.i("WELL", i.toString())
+                parseSpeciesObjectsFromJSONData(speciesURL, "?page=$i")
+            }
+        }
+        Log.i("WHAT", allSpeciesObjects.size.toString())
+        return allSpeciesObjects
+    }
+
+
     fun parsePersonObjectsFromJSONData(link: String, page: String): List<Person>? {
         var downloadingObject: DownloadingObject = DownloadingObject()
         var topLevelPlantJSONData: String =
@@ -116,11 +141,90 @@ class CustomParserClass {
             index++
         }
         for (i in 0..allPlanetObjects.size - 1) {
-            Log.i("PEOPLE", "${allPlanetObjects[i]}")
+            Log.i("PLANETS", "${allPlanetObjects[i]}")
         }
         return allPlanetObjects
     }
+    fun parseVehicleObjectsFromJSONData(link: String, page: String): List<Vehicle>? {
+        var downloadingObject: DownloadingObject = DownloadingObject()
+        var topLevelVehicleJSONData: String =
+                downloadingObject.downloadJSONDataFromLink(link + page)
+        var topLevelJSONObject: JSONObject = JSONObject(topLevelVehicleJSONData)
+        var vehiclesObjectsArray: JSONArray = topLevelJSONObject.getJSONArray("results")
 
+        var index: Int = 0
+
+        while (index < vehiclesObjectsArray.length()) {
+            var vehicleObject: Vehicle = Vehicle()
+            var currentVehicle = vehiclesObjectsArray.getJSONObject(index)
+
+            //Using with to refractor code above
+            with(currentVehicle) {
+                vehicleObject.name = getString("name")
+                vehicleObject.model = getString("model")
+                vehicleObject.manufacturer = getString("manufacturer")
+                vehicleObject.cost_in_credits = getString("cost_in_credits")
+                vehicleObject.length = getString("length")
+                vehicleObject.max_atmosphering_speed = getString("max_atmosphering_speed")
+                vehicleObject.crew = getString("crew")
+                vehicleObject.passengers = getString("passengers")
+                vehicleObject.cargo_capacity = getString("cargo_capacity")
+                vehicleObject.consumables = getString("consumables")
+                vehicleObject.pilots   = convertJSONArray(getJSONArray("pilots"))
+                vehicleObject.films   = convertJSONArray(getJSONArray("films"))
+                vehicleObject.created = getString("created")
+                vehicleObject.edited = getString("edited")
+                vehicleObject.url = getString("url")
+            }
+
+            allVehicleObjects.add(vehicleObject)
+            index++
+        }
+        for (i in 0..allVehicleObjects.size - 1) {
+            Log.i("VEHICLES", "${allVehicleObjects[i]}")
+        }
+        return allVehicleObjects
+    }
+    fun parseSpeciesObjectsFromJSONData(link: String, page: String): List<Species>? {
+        var downloadingObject: DownloadingObject = DownloadingObject()
+        var topLevelSpeciesJSONData: String =
+                downloadingObject.downloadJSONDataFromLink(link + page)
+        var topLevelJSONObject: JSONObject = JSONObject(topLevelSpeciesJSONData)
+        var speciesObjectsArray: JSONArray = topLevelJSONObject.getJSONArray("results")
+
+        var index: Int = 0
+
+        while (index < speciesObjectsArray.length()) {
+            var speciesObject: Species = Species()
+            var currentSpecies = speciesObjectsArray.getJSONObject(index)
+
+            //Using with to refractor code above
+            with(currentSpecies) {
+                speciesObject.name = getString("name")
+                speciesObject.classification = getString("classification")
+                speciesObject.designation = getString("designation")
+                speciesObject.average_height = getString("average_height")
+                speciesObject.skin_colors = getString("skin_colors")
+                speciesObject.hair_colors = getString("hair_colors")
+                speciesObject.eye_colors = getString("eye_colors")
+                speciesObject.average_lifespan = getString("average_lifespan")
+                speciesObject.homeworld = getString("homeworld")
+                speciesObject.language = getString("language")
+                speciesObject.people   = convertJSONArray(getJSONArray("people"))
+                speciesObject.films   = convertJSONArray(getJSONArray("films"))
+                speciesObject.created = getString("created")
+                speciesObject.edited = getString("edited")
+                speciesObject.url = getString("url")
+            }
+
+            allSpeciesObjects.add(speciesObject)
+            index++
+        }
+        for (i in 0..allSpeciesObjects.size - 1) {
+            Log.i("SPECIES", "${allSpeciesObjects[i]}")
+        }
+        return allSpeciesObjects
+    }
     fun convertJSONArray(jsonObject: JSONArray) : ArrayList<String>{
         val listdata = ArrayList<String>()
         val jArray = jsonObject
