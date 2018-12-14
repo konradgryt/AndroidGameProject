@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.konrad.androidgameproject.R;
 import com.example.konrad.androidgameproject.Service.SoundService;
 import com.example.konrad.androidgameproject.Service.Utility;
@@ -75,28 +77,33 @@ public class MainMenu extends AppCompatActivity {
         Log.i("Well", txtViewMenuAvatar.getText().toString());
     }
 
-    public void startGame(View vew) {
+    public void startGame(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         Intent getGameIntent = new Intent(this, Difficulty.class);
         startActivityForResult(getGameIntent,OPEN_DIFFICULTY_CODE);
     }
 
     public void openCategories(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         Intent getOptionsIntent = new Intent(this, Category.class);
         //startActivity(getOptionsIntent);
         startActivityForResult(getOptionsIntent,OPEN_CATEGORIES_CODE);
     }
 
     public void openOptions(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         Intent getOptionsIntent = new Intent(this, Options.class);
         //startActivity(getOptionsIntent);
        startActivityForResult(getOptionsIntent,OPEN_OPTIONS_CODE);
     }
 
     public void openHelp(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         Toast.makeText(this, "May the force be with you", Toast.LENGTH_SHORT).show();
     }
 
     public void openProfile(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         Intent getProfileIntent = new Intent(this, Profile.class);
         //startActivity(getOptionsIntent);
         startActivityForResult(getProfileIntent,OPEN_PROFILE_CODE);
@@ -104,5 +111,11 @@ public class MainMenu extends AppCompatActivity {
 
     public void quitGame(View view) {
         System.exit(1);
+    }
+
+    private void playAnimationOnView(View view, Techniques technique) {
+        if (Options.areAnimationsOn) {
+            YoYo.with(technique).duration(500).repeat(0).playOn(view);
+        }
     }
 }

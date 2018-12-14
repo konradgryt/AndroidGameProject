@@ -190,7 +190,7 @@
             android:layout_gravity="center_vertical|center_horizontal|center" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtDownloading"
             android:layout_width="match_parent"
             android:layout_height="85dp"
             android:background="@drawable/downloadingdata"

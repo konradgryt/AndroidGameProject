@@ -4,6 +4,8 @@ package com.example.konrad.androidgameproject.GUI
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.konrad.androidgameproject.R
 import kotlinx.android.synthetic.main.activity_select_categories.*
 
@@ -15,34 +17,40 @@ class Category : AppCompatActivity() {
         val active = resources.getDrawable(R.drawable.active)
         val disabled = resources.getDrawable(R.drawable.disabled)
 
+        numberOfActiveCategories = 0
+
         //Characters
         if (areCharactersOn) {
             isActiveCharacters.setBackground(active)
+            numberOfActiveCategories++
         } else if (!areCharactersOn) {
             isActiveCharacters.setBackground(disabled)
         }
         //Vehicles
         if (areVehiclesOn) {
             isActiveVehicles.setBackground(active)
+            numberOfActiveCategories++
         } else if (!areVehiclesOn) {
             isActiveVehicles.setBackground(disabled)
         }
         //Planets
         if (arePlanetsOn) {
             isActivePlantes.setBackground(active)
+            numberOfActiveCategories++
         } else if (!arePlanetsOn) {
             isActivePlantes.setBackground(disabled)
         }
         //Species
         if (areSpeciesOn) {
             isActiveSpecies.setBackground(active)
+            numberOfActiveCategories++
         } else if (!areSpeciesOn) {
             isActiveSpecies.setBackground(disabled)
         }
-        numberOfActiveCategories = 1
     }
 
     fun onClickCategoryCharacters(view: View) {
+        playAnimationOnView(isActiveCharacters, Techniques.Pulse)
         if (!areCharactersOn) {
             val active = resources.getDrawable(R.drawable.active)
             isActiveCharacters.setBackground(active)
@@ -57,6 +65,7 @@ class Category : AppCompatActivity() {
     }
 
     fun onClickCategoryVehicles(view: View) {
+        playAnimationOnView(isActiveVehicles, Techniques.Pulse)
         if (!areVehiclesOn) {
             val active = resources.getDrawable(R.drawable.active)
             isActiveVehicles.setBackground(active)
@@ -71,6 +80,7 @@ class Category : AppCompatActivity() {
     }
 
     fun onClickCategoryPlanets(view: View) {
+        playAnimationOnView(isActivePlantes, Techniques.Pulse)
         if (!arePlanetsOn) {
             val active = resources.getDrawable(R.drawable.active)
             isActivePlantes.setBackground(active)
@@ -85,6 +95,7 @@ class Category : AppCompatActivity() {
     }
 
     fun onClickCategorySpecies(view: View) {
+        playAnimationOnView(isActiveSpecies, Techniques.Pulse)
         if (!areSpeciesOn) {
             val active = resources.getDrawable(R.drawable.active)
             isActiveSpecies.setBackground(active)
@@ -112,7 +123,11 @@ class Category : AppCompatActivity() {
         isActiveSpecies.setBackground(disabled)
     }
 
-
+    private fun playAnimationOnView(view: View, technique: Techniques) {
+        if (Options.areAnimationsOn) {
+            YoYo.with(technique).duration(500).repeat(0).playOn(view)
+        }
+    }
 
     companion object {
         internal var numberOfActiveCategories = 1

@@ -8,9 +8,12 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.GridLayout
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.konrad.androidgameproject.Model.*
 import com.example.konrad.androidgameproject.Service.CustomParserClass
 import com.example.konrad.androidgameproject.R
+import kotlinx.android.synthetic.main.activity_select_categories.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_select_difficulty.*
 
@@ -26,6 +29,7 @@ class Difficulty : AppCompatActivity() {
     }
 
     fun onClickEasyDifficulty(buttonView: View)  {
+        playAnimationOnView(btnPadawanDifficulty, Techniques.Pulse)
         try {
             setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
@@ -36,6 +40,7 @@ class Difficulty : AppCompatActivity() {
     }
 
     fun onClickNormalDifficulty(buttonView: View) {
+        playAnimationOnView(btnJediDifficulty, Techniques.Pulse)
         try {
             setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
@@ -46,6 +51,7 @@ class Difficulty : AppCompatActivity() {
     }
 
     fun onClickHardDifficulty(buttonView: View) {
+        playAnimationOnView(btnJediKnightDifficulty, Techniques.Pulse)
         try {
             setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
@@ -56,6 +62,7 @@ class Difficulty : AppCompatActivity() {
     }
 
     fun onClickVeryHardDifficulty(buttonView: View) {
+        playAnimationOnView(btnJediMasterDifficulty, Techniques.Pulse)
         try {
             setProgressBar(true)
             val innerClassObject = DownloadingQuestionDataTask()
@@ -152,14 +159,22 @@ class Difficulty : AppCompatActivity() {
     private fun setProgressBar(show: Boolean) {
         if (show) {
             //setUIWidgets(false)
+            playAnimationOnView(linearLayoutProgress, Techniques.FadeIn)
             linearLayoutProgress.setVisibility(View.VISIBLE)
             progressBar.setVisibility(View.VISIBLE)
             window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         } else {
             //setUIWidgets(true)
+            playAnimationOnView(linearLayoutProgress, Techniques.FadeOut)
             linearLayoutProgress.setVisibility(View.GONE)
             progressBar.setVisibility(View.GONE)
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
+    }
+
+    private fun playAnimationOnView(view: View, technique: Techniques) {
+        if (Options.areAnimationsOn) {
+            YoYo.with(technique).duration(500).repeat(0).playOn(view)
         }
     }
 }

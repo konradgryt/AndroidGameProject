@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.os.Vibrator;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.konrad.androidgameproject.R;
 import com.example.konrad.androidgameproject.Service.SoundService;
 
@@ -61,6 +63,7 @@ public class Options extends AppCompatActivity {
     }
 
     public void onClickMusic(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         Intent sound = new Intent(this, SoundService.class);
         if (!isMusicOn) {
             Drawable active = getResources().getDrawable( R.drawable.active );
@@ -79,6 +82,7 @@ public class Options extends AppCompatActivity {
         }
     }
     public void onClickVibrations(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         if (!areVibrationsOn) {
             Drawable active = getResources().getDrawable( R.drawable.active );
             btnOptionsVibrations.setBackground(active);
@@ -97,6 +101,7 @@ public class Options extends AppCompatActivity {
     }
 
     public void onClickAnimations(View view) {
+        playAnimationOnView(view,Techniques.Pulse);
         if (!areAnimationsOn) {
             Drawable active = getResources().getDrawable( R.drawable.active );
             btnOptionsAnimations.setBackground(active);
@@ -115,5 +120,11 @@ public class Options extends AppCompatActivity {
         editor.clear();
         editor.apply();
         Toast.makeText(this,"DATA RESETED", Toast.LENGTH_SHORT).show();
+    }
+
+    private void playAnimationOnView(View view, Techniques technique) {
+        if (Options.areAnimationsOn) {
+            YoYo.with(technique).duration(500).repeat(0).playOn(view);
+        }
     }
 }
