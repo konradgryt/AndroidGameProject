@@ -159,6 +159,7 @@ class Game : AppCompatActivity() {
         }
         else if (level == LEVEL.HARD || level == LEVEL.VERY_HARD && numberOfEntriesInBank > 0) {
             buttonsHard.setVisibility(View.VISIBLE)
+            txtState.setVisibility(View.GONE)
             val randomIndexForButton1: Int = list[0]
             var randomIndexForButton2: Int = list[1]
             var randomIndexForButton3: Int = list[2]

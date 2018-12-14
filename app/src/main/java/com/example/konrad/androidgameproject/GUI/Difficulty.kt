@@ -1,13 +1,19 @@
 package com.example.konrad.androidgameproject.GUI
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.AsyncTask
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.GridLayout
+import android.widget.Toast
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.konrad.androidgameproject.Model.*
@@ -30,45 +36,53 @@ class Difficulty : AppCompatActivity() {
 
     fun onClickEasyDifficulty(buttonView: View)  {
         playAnimationOnView(btnPadawanDifficulty, Techniques.Pulse)
-        try {
-            setProgressBar(true)
-            val innerClassObject = DownloadingQuestionDataTask()
-            innerClassObject.execute("Easy")
-        } catch(e: Exception) {
-            e.printStackTrace()
+        if (checkForInternetConnection()) {
+            try {
+                setProgressBar(true)
+                val innerClassObject = DownloadingQuestionDataTask()
+                innerClassObject.execute("Easy")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun onClickNormalDifficulty(buttonView: View) {
         playAnimationOnView(btnJediDifficulty, Techniques.Pulse)
-        try {
-            setProgressBar(true)
-            val innerClassObject = DownloadingQuestionDataTask()
-            innerClassObject.execute("Normal")
-        } catch(e: Exception) {
-            e.printStackTrace()
+        if (checkForInternetConnection()) {
+            try {
+                setProgressBar(true)
+                val innerClassObject = DownloadingQuestionDataTask()
+                innerClassObject.execute("Normal")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun onClickHardDifficulty(buttonView: View) {
         playAnimationOnView(btnJediKnightDifficulty, Techniques.Pulse)
-        try {
-            setProgressBar(true)
-            val innerClassObject = DownloadingQuestionDataTask()
-            innerClassObject.execute("Hard")
-        } catch(e: Exception) {
-            e.printStackTrace()
+        if (checkForInternetConnection()) {
+            try {
+                setProgressBar(true)
+                val innerClassObject = DownloadingQuestionDataTask()
+                innerClassObject.execute("Hard")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun onClickVeryHardDifficulty(buttonView: View) {
         playAnimationOnView(btnJediMasterDifficulty, Techniques.Pulse)
-        try {
-            setProgressBar(true)
-            val innerClassObject = DownloadingQuestionDataTask()
-            innerClassObject.execute("Very Hard")
-        } catch(e: Exception) {
-            e.printStackTrace()
+        if (checkForInternetConnection()) {
+            try {
+                setProgressBar(true)
+                val innerClassObject = DownloadingQuestionDataTask()
+                innerClassObject.execute("Very Hard")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -176,5 +190,39 @@ class Difficulty : AppCompatActivity() {
         if (Options.areAnimationsOn) {
             YoYo.with(technique).duration(500).repeat(0).playOn(view)
         }
+    }
+
+    private fun checkForInternetConnection(): Boolean {
+
+        val connectivityManager: ConnectivityManager =
+                this.getSystemService(android.content.Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val isDeviceConnectedToInternet = networkInfo != null && networkInfo.isConnected
+        if (!isDeviceConnectedToInternet) {
+            createAlert()
+            Log.i("INTERNET","There is no internet")
+            return false
+        } else {
+            Log.i("INTERNET","There is internet")
+            return true
+        }
+    }
+
+    private fun createAlert() {
+        val alertDialog: AlertDialog = AlertDialog.Builder(this@Difficulty).create()
+        alertDialog.setTitle("Network Error")
+        alertDialog.setMessage("Please check internet connection")
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", {
+            dialog: DialogInterface?, which: Int ->
+            startActivity(Intent(Settings.ACTION_SETTINGS))
+        })
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Cancel", {
+            dialog: DialogInterface?, which: Int ->
+            Toast.makeText(this@Difficulty, " You must be connected to the internet", Toast.LENGTH_SHORT).show()
+            finish() // closing current activity
+        })
+
+        alertDialog.show()
     }
 }

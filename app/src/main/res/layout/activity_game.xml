@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/txtHighScore"
-        android:layout_width="0dp"
+        android:layout_width="39dp"
         android:layout_height="25dp"
         android:gravity="start"
         android:text="@string/zero"
@@ -36,7 +36,8 @@
         android:id="@+id/txtCurrentScoreLabel"
         android:layout_width="94dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/score"
         android:textColor="@color/colorAccent"

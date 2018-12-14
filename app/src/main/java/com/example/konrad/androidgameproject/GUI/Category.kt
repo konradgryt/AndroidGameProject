@@ -110,6 +110,7 @@ class Category : AppCompatActivity() {
     }
 
     fun onClickResetToDefault(view: View) {
+        numberOfActiveCategories = 1
         areCharactersOn = true
         areVehiclesOn = false
         arePlanetsOn = false
