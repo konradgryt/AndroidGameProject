@@ -28,9 +28,6 @@
         <activity android:name=".Difficulty" android:label="Select your difficulty" android:theme="@style/AppTheme" ></activity>
         <activity android:name=".Category" android:label="Select active categories" android:theme="@style/AppTheme" ></activity>
         <service android:name=".SoundService" android:enabled="true"/>
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

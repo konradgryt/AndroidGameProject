@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <Button
+        android:id="@+id/btnDefault"
+        android:layout_width="272dp"
+        android:layout_height="27dp"
+        android:background="@drawable/setdefault"
+        android:onClick="onClickResetToDefault"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleDifficulity" />
+
+    <ImageView
+        android:id="@+id/titleDifficulity"
+        android:layout_width="wrap_content"
+        android:layout_height="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/categories" />
+
+    <ImageButton
+        android:id="@+id/btnCharacters"
+        android:layout_width="230dp"
+        android:layout_height="35dp"
+        android:layout_margin="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/characterswhite"
+        android:contentDescription="@string/padawan_difficulty"
+        android:onClick="onClickCategoryCharacters"
+        app:layout_constraintBottom_toTopOf="@+id/isActiveCharacters"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/isActiveCharacters"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/active"
+        android:onClick="onClickCategoryCharacters"
+        app:layout_constraintBottom_toTopOf="@+id/btnVehicles"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnVehicles"
+        android:layout_width="180dp"
+        android:layout_height="35dp"
+        android:layout_margin="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/vehicles"
+        android:contentDescription="@string/jedi_difficulty"
+        android:onClick="onClickCategoryVehicles"
+        app:layout_constraintBottom_toTopOf="@+id/isActiveVehicles"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/isActiveVehicles"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/disabled"
+        android:onClick="onClickCategoryVehicles"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlanets"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnPlanets"
+        android:layout_width="187dp"
+        android:layout_height="35dp"
+        android:layout_margin="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/planets"
+        android:contentDescription="@string/jedi_knight_difficulty"
+        android:onClick="onClickCategoryPlanets"
+        app:layout_constraintBottom_toTopOf="@+id/isActivePlantes"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/isActivePlantes"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/disabled"
+        android:onClick="onClickCategoryPlanets"
+        app:layout_constraintBottom_toTopOf="@+id/btnSpecies"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnSpecies"
+        android:layout_width="151dp"
+        android:layout_height="35dp"
+        android:layout_margin="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/species"
+        android:contentDescription="@string/jedi_master_difficulty"
+        android:onClick="onClickCategorySpecies"
+        app:layout_constraintBottom_toTopOf="@+id/isActiveSpecies"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/isActiveSpecies"
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/disabled"
+        android:onClick="onClickCategorySpecies"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
