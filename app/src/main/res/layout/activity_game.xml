@@ -9,21 +9,6 @@
     tools:context=".GUI.Game"
     tools:layout_editor_absoluteY="81dp">
 
-    <Button
-        android:id="@+id/btnNextQuestion"
-        android:layout_width="144dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/nextquestion"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
     <TextView
         android:id="@+id/txtHighScoreLabel"
         android:layout_width="158dp"
@@ -52,6 +37,7 @@
         android:layout_width="94dp"
         android:layout_height="30dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/score"
         android:textColor="@color/colorAccent"
         android:textSize="12sp"
@@ -71,12 +57,12 @@
 
     <ImageView
         android:id="@+id/imgTaken"
-        android:layout_width="0dp"
-        android:layout_height="315dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_width="290dp"
+        android:layout_height="275dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/placeholder"
         android:contentDescription="@string/dark_mode"
         android:focusable="true"
@@ -90,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,50 +85,61 @@
         app:layout_constraintTop_toBottomOf="@+id/imgTaken">
 
         <TextView
-            android:id="@+id/textWrongAnswersLabel"
+            android:id="@+id/textRightAnswersLabel"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/wrong"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/right"
             android:textColor="@color/colorAccent"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/txtRightAnswers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="#0000FF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/textRightAnswersLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textWrongAnswersLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/wrong"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textRightAnswersLabel" />
+
+        <TextView
             android:id="@+id/txtWrongAnswers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:text="@string/zero"
             android:textColor="#FF0000"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textWrongAnswersLabel"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textRightAnswersLabel" />
 
-        <TextView
-            android:id="@+id/textRightAnswersLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/right"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/txtRightAnswers"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/txtRightAnswers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+        <Button
+            android:id="@+id/btnNextQuestion"
+            android:layout_width="130dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="@string/zero"
-            android:textColor="#0000FF"
-            android:textSize="20sp"
+            android:background="@drawable/nextquestion"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -165,7 +163,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
@@ -173,7 +171,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNextQuestion">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <Button
             android:id="@+id/button1easy"
@@ -212,7 +210,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/buttonsNormal"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="87dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -223,12 +221,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNextQuestion">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <Button
             android:id="@+id/button1normal"
             android:layout_width="100dp"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
@@ -244,7 +242,7 @@
         <Button
             android:id="@+id/button2normal"
             android:layout_width="100dp"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
@@ -260,7 +258,7 @@
         <Button
             android:id="@+id/button3normal"
             android:layout_width="100dp"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
@@ -281,7 +279,7 @@
         android:id="@+id/buttonsHard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -289,14 +287,14 @@
         <Button
             android:id="@+id/button1hard"
             android:layout_width="140dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginStart="48dp"
             android:layout_marginLeft="48dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/answerbox"
             android:onClick="button1IsClicked"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -304,14 +302,14 @@
         <Button
             android:id="@+id/button2hard"
             android:layout_width="140dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="48dp"
             android:layout_marginRight="48dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/answerbox"
             android:onClick="button2IsClicked"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -319,14 +317,14 @@
         <Button
             android:id="@+id/button3hard"
             android:layout_width="140dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="48dp"
             android:layout_marginRight="48dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/answerbox"
             android:onClick="button3IsClicked"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/button2hard"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -334,14 +332,14 @@
         <Button
             android:id="@+id/button4hard"
             android:layout_width="140dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginStart="48dp"
             android:layout_marginLeft="48dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/answerbox"
             android:onClick="button4IsClicked"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/button1hard"
             app:layout_constraintStart_toStartOf="parent" />

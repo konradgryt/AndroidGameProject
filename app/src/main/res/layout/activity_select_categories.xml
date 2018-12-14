@@ -41,8 +41,8 @@
 
     <ImageView
         android:id="@+id/isActiveCharacters"
-        android:layout_width="wrap_content"
-        android:layout_height="85dp"
+        android:layout_width="290dp"
+        android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/active"
@@ -66,8 +66,8 @@
 
     <ImageView
         android:id="@+id/isActiveVehicles"
-        android:layout_width="wrap_content"
-        android:layout_height="85dp"
+        android:layout_width="290dp"
+        android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/disabled"
@@ -91,8 +91,8 @@
 
     <ImageView
         android:id="@+id/isActivePlantes"
-        android:layout_width="wrap_content"
-        android:layout_height="85dp"
+        android:layout_width="290dp"
+        android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/disabled"
@@ -116,8 +116,8 @@
 
     <ImageView
         android:id="@+id/isActiveSpecies"
-        android:layout_width="wrap_content"
-        android:layout_height="85dp"
+        android:layout_width="290dp"
+        android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/disabled"

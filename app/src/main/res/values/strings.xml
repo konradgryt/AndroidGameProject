@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidGameProject</string>
+    <string name="app_name">StarWars\nCard Quiz</string>
     <string name="button_off">Off</string>
     <string name="button_on">On</string>
     <string name="music">Music</string>

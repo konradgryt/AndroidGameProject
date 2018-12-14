@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import android.os.Vibrator;
 import com.example.konrad.androidgameproject.R;
 import com.example.konrad.androidgameproject.Service.SoundService;
 
-public class Options extends Activity {
+public class Options extends AppCompatActivity {
 
     static boolean isMusicOn = true;
     static boolean areVibrationsOn = false;

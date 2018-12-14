@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.konrad.androidgameproject.R;
 import com.example.konrad.androidgameproject.Service.SoundService;
@@ -89,6 +90,10 @@ public class MainMenu extends AppCompatActivity {
         Intent getOptionsIntent = new Intent(this, Options.class);
         //startActivity(getOptionsIntent);
        startActivityForResult(getOptionsIntent,OPEN_OPTIONS_CODE);
+    }
+
+    public void openHelp(View view) {
+        Toast.makeText(this, "May the force be with you", Toast.LENGTH_SHORT).show();
     }
 
     public void openProfile(View view) {
