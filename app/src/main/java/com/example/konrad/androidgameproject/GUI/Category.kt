@@ -122,7 +122,7 @@ class Category : AppCompatActivity() {
         internal var areSpeciesOn = false
 
         fun getActiveCategories(): Array<String> {
-            var array: Array<String> = Array(numberOfActiveCategories){
+            val array: Array<String> = Array(numberOfActiveCategories){
                 i -> ""
             }
 //        for (index in 0..numberOfActiveCategories) {

@@ -19,6 +19,7 @@
         android:id="@+id/titleDifficulity"
         android:layout_width="wrap_content"
         android:layout_height="72dp"
+        android:contentDescription="@string/dark_mode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +46,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/active"
+        android:contentDescription="@string/dark_mode"
         android:onClick="onClickCategoryCharacters"
         app:layout_constraintBottom_toTopOf="@+id/btnVehicles"
         app:layout_constraintStart_toStartOf="parent" />
@@ -69,6 +71,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/disabled"
+        android:contentDescription="@string/dark_mode"
         android:onClick="onClickCategoryVehicles"
         app:layout_constraintBottom_toTopOf="@+id/btnPlanets"
         app:layout_constraintStart_toStartOf="parent" />
@@ -93,6 +96,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/disabled"
+        android:contentDescription="@string/dark_mode"
         android:onClick="onClickCategoryPlanets"
         app:layout_constraintBottom_toTopOf="@+id/btnSpecies"
         app:layout_constraintStart_toStartOf="parent" />
@@ -117,6 +121,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@drawable/disabled"
+        android:contentDescription="@string/dark_mode"
         android:onClick="onClickCategorySpecies"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

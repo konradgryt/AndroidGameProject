@@ -30,7 +30,6 @@
         android:layout_width="172dp"
         android:layout_height="68dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/opengallery"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +40,6 @@
         android:layout_width="171dp"
         android:layout_height="72dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/takepicture"
         app:layout_constraintBottom_toTopOf="@+id/btnProfileOpenGallery"
@@ -50,6 +48,7 @@
     <EditText
         android:id="@+id/txtProfileNickname"
         style="@style/Widget.AppCompat.EditText"
+        android:autofillHints="@string/hint"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:layout_marginStart="32dp"

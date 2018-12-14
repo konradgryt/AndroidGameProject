@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_select_difficulty.*
 
 class Difficulty : AppCompatActivity() {
     val START_GAME = 1
-    var difficulty :String? = null
+    var difficulty :LEVEL? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,13 +77,23 @@ class Difficulty : AppCompatActivity() {
             var pages = 0
             when (params[0]) {
                 // There is no page 1 in the api
-                "Easy" -> pages = 0
-                "Normal" -> pages = 2
-                "Hard" -> pages = 3
-                "Very Hard" -> pages = 4
+                "Easy" -> {
+                    pages = 0
+                    difficulty = LEVEL.EASY
+                }
+                "Normal" -> {
+                    pages = 2
+                    difficulty = LEVEL.NORMAL
+                }
+                "Hard" -> {
+                    pages = 3
+                    difficulty = LEVEL.HARD
+                }
+                "Very Hard" -> {
+                    pages = 4
+                    difficulty = LEVEL.VERY_HARD
+                }
             }
-            difficulty = params[0]
-            Log.i("PAGES", pages.toString())
 
             if (Category.areCharactersOn) {
                 listOfPeople = parser.parsePeopleFromJSONData(pages)

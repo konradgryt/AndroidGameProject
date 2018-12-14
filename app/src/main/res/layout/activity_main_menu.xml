@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:background="@color/colorPrimaryDark"
     tools:context=".GUI.MainMenu">
-    >
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/logo"
+        android:contentDescription="@string/dark_mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,6 +23,7 @@
         android:id="@+id/imgViewMenuAvatar"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:contentDescription="@string/dark_mode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -46,9 +48,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/profile"
+        android:contentDescription="@string/dark_mode"
         android:gravity="center_horizontal|center"
         android:onClick="openProfile"
-        android:text="Help"
         app:layout_constraintBottom_toTopOf="@+id/btnCategories"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -72,9 +74,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/settings"
+        android:contentDescription="@string/dark_mode"
         android:gravity="center_horizontal|center"
         android:onClick="openOptions"
-        android:text="Options"
         app:layout_constraintBottom_toTopOf="@+id/btnHelp"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -97,9 +99,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="48dp"
         android:background="@drawable/quit"
+        android:contentDescription="@string/dark_mode"
         android:gravity="center_horizontal|center"
         android:onClick="quitGame"
-        android:text="Quit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -113,6 +115,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/dark_mode"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/btnStartGame"
@@ -128,6 +131,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/startblue"
+        android:contentDescription="@string/dark_mode"
         android:gravity="center_horizontal|center"
         android:onClick="startGame"
         app:layout_constraintBottom_toBottomOf="parent"

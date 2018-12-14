@@ -1,8 +1,6 @@
 package com.example.konrad.androidgameproject.GUI
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -14,7 +12,6 @@ import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import com.example.konrad.androidgameproject.Model.Entry
@@ -22,6 +19,7 @@ import com.example.konrad.androidgameproject.Model.TYPE
 import com.example.konrad.androidgameproject.R
 import com.example.konrad.androidgameproject.Service.DownloadingObject
 import kotlinx.android.synthetic.main.activity_game.*
+import java.util.*
 
 class Game : AppCompatActivity() {
 
@@ -34,6 +32,7 @@ class Game : AppCompatActivity() {
 
     var currentScore: Int = 0
     var quizState: QUIZ_STATE = QUIZ_STATE.WAITING
+    var level: LEVEL? = null
     var type: TYPE? = null
 
     enum class QUIZ_STATE {
@@ -41,26 +40,24 @@ class Game : AppCompatActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         txtState.text = "Click 'generate question' when you are ready!"
 
-        Category.areCharactersOn
         val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
-
         txtHighScore.text = shared.getInt("highscore", 0).toString()
         txtCurrentScore.text = currentScore.toString()
 
-        var difficulty = intent.getStringExtra("DIFFICULTY")
-        generateQuiz(difficulty, selectCategory(Category.getActiveCategories()))
+        level = intent.getSerializableExtra("DIFFICULTY") as LEVEL
 
+        if (checkForInternetConnection()) {
+            generateQuiz(level, selectCategory(Category.getActiveCategories()))
+        }
         btnNextQuestion.setOnClickListener{
             if (checkForInternetConnection()) {
-                var difficulty = intent.getStringExtra("DIFFICULTY")
-
-                Log.i("WHAT", difficulty)
-                generateQuiz(difficulty, selectCategory(Category.getActiveCategories()))
+                generateQuiz(level, selectCategory(Category.getActiveCategories()))
             }
         }
     }
@@ -70,41 +67,49 @@ class Game : AppCompatActivity() {
         return categories[randomCategoryIndex]
     }
 
-    fun generateQuiz(difficulty: String, type: String) {
+    fun generateQuiz(level: LEVEL?, type: String) {
         quizState = QUIZ_STATE.WAITING
-        txtState.text = "Select right $type"
+        txtState.text = "Category: $type"
 
         var questionData: Array<Entry>? = null
-        if (type == "person") {
-            questionData = intent.getSerializableExtra("PEOPLE") as Array<Entry>
-            questionData.map { i -> i.generateId() }
-        } else if (type == "planet") {
-            questionData = intent.getSerializableExtra("PLANETS") as Array<Entry>
-            questionData.map { i -> i.generateId() }
-        } else if (type == "vehicle") {
-            questionData = intent.getSerializableExtra("VEHICLES") as Array<Entry>
-            questionData.map { i -> i.generateId() }
-        } else if (type == "species") {
-            questionData = intent.getSerializableExtra("SPECIES") as Array<Entry>
-            questionData.map { i -> i.generateId() }
+        when (type) {
+            "person" -> {
+                questionData = intent.getSerializableExtra("PEOPLE") as Array<Entry>
+                questionData.map { i -> i.generateId() }
+            }
+            "planet" -> {
+                questionData = intent.getSerializableExtra("PLANETS") as Array<Entry>
+                questionData.map { i -> i.generateId() }
+            }
+            "vehicle" -> {
+                questionData = intent.getSerializableExtra("VEHICLES") as Array<Entry>
+                questionData.map { i -> i.generateId() }
+            }
+            "species" -> {
+                questionData = intent.getSerializableExtra("SPECIES") as Array<Entry>
+                questionData.map { i -> i.generateId() }
+            }
         }
-
 
         val numberOfEntriesInBank = questionData!!.size
 
-        if (difficulty == "Easy" && numberOfEntriesInBank > 0) {
-            button1.setVisibility(View.VISIBLE)
-            button2.setVisibility(View.VISIBLE)
-            val randomIndexForButton1: Int = (Math.random() * questionData!!.size).toInt()
-            var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
-            while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
-                randomIndexForButton2 = (Math.random() * questionData.size).toInt()
-            }
+        val list = ArrayList<Int>()
+        for (i in 0 until questionData!!.size) {
+            list.add(i)
+        }
+        list.shuffle()
+
+        if (level == LEVEL.EASY && numberOfEntriesInBank > 0) {
+
+            buttonsEasy.setVisibility(View.VISIBLE)
+            val randomIndexForButton1: Int = list[0]
+            var randomIndexForButton2: Int = list[1]
+
             val possibleAnswers = ArrayList<Entry>()
             possibleAnswers.add(questionData.get(randomIndexForButton1))
             possibleAnswers.add(questionData.get(randomIndexForButton2))
-            button1.text = questionData.get(randomIndexForButton1).toString()
-            button2.text = questionData.get(randomIndexForButton2).toString()
+            button1easy.text = questionData.get(randomIndexForButton1).toString()
+            button2easy.text = questionData.get(randomIndexForButton2).toString()
 
             correctAnswerIndex = (Math.random() * possibleAnswers.size).toInt()
             correctEntry = possibleAnswers.get(correctAnswerIndex)
@@ -113,26 +118,19 @@ class Game : AppCompatActivity() {
             downloadingImageTask.execute(correctEntry!!.type)
 
         }
-        else if (difficulty == "Normal" && numberOfEntriesInBank > 0) {
-            button1.setVisibility(View.VISIBLE)
-            button2.setVisibility(View.VISIBLE)
-            button3.setVisibility(View.VISIBLE)
-            val randomIndexForButton1: Int = (Math.random() * questionData!!.size).toInt()
-            var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
-            var randomIndexForButton3: Int = (Math.random() * questionData.size).toInt()
-            while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
-                randomIndexForButton2 = (Math.random() * questionData.size).toInt()
-                while (randomIndexForButton2 == randomIndexForButton3 || randomIndexForButton1 == randomIndexForButton3) { //randomize again
-                    randomIndexForButton3 = (Math.random() * questionData.size).toInt()
-                }
-            }
+        else if (level == LEVEL.NORMAL && numberOfEntriesInBank > 0) {
+            buttonsNormal.setVisibility(View.VISIBLE)
+            val randomIndexForButton1: Int = list[0]
+            var randomIndexForButton2: Int = list[1]
+            var randomIndexForButton3: Int = list[2]
+
             val possibleAnswers = ArrayList<Entry>()
             possibleAnswers.add(questionData.get(randomIndexForButton1))
             possibleAnswers.add(questionData.get(randomIndexForButton2))
             possibleAnswers.add(questionData.get(randomIndexForButton3))
-            button1.text = questionData.get(randomIndexForButton1).toString()
-            button2.text = questionData.get(randomIndexForButton2).toString()
-            button3.text = questionData.get(randomIndexForButton3).toString()
+            button1normal.text = questionData.get(randomIndexForButton1).toString()
+            button2normal.text = questionData.get(randomIndexForButton2).toString()
+            button3normal.text = questionData.get(randomIndexForButton3).toString()
 
             correctAnswerIndex = (Math.random() * possibleAnswers.size).toInt()
             correctEntry = possibleAnswers.get(correctAnswerIndex)
@@ -141,35 +139,22 @@ class Game : AppCompatActivity() {
             downloadingImageTask.execute(correctEntry!!.type)
 
         }
-        else if (difficulty == "Hard" && numberOfEntriesInBank > 0) {
-            button1.setVisibility(View.VISIBLE)
-            button2.setVisibility(View.VISIBLE)
-            button3.setVisibility(View.VISIBLE)
-            button4.setVisibility(View.VISIBLE)
-            var randomIndexForButton1: Int = (Math.random() * questionData!!.size).toInt()
-            var randomIndexForButton2: Int = (Math.random() * questionData.size).toInt()
-            var randomIndexForButton3: Int = (Math.random() * questionData.size).toInt()
-            var randomIndexForButton4: Int = (Math.random() * questionData.size).toInt()
-            while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
-                randomIndexForButton2 = (Math.random() * questionData.size).toInt()
-                while (randomIndexForButton3 == randomIndexForButton2 || randomIndexForButton3 == randomIndexForButton1) { //randomize again
-                    randomIndexForButton3 = (Math.random() * questionData.size).toInt()
-                    while (randomIndexForButton4 == randomIndexForButton1 || randomIndexForButton4 == randomIndexForButton2|| randomIndexForButton4 == randomIndexForButton3) { //randomize again
-                        randomIndexForButton4 = (Math.random() * questionData.size).toInt()
-                    }
-                }
-            }
-
+        else if (level == LEVEL.HARD || level == LEVEL.VERY_HARD && numberOfEntriesInBank > 0) {
+            buttonsHard.setVisibility(View.VISIBLE)
+            val randomIndexForButton1: Int = list[0]
+            var randomIndexForButton2: Int = list[1]
+            var randomIndexForButton3: Int = list[2]
+            var randomIndexForButton4: Int = list[3]
 
             val possibleAnswers = ArrayList<Entry>()
             possibleAnswers.add(questionData!!.get(randomIndexForButton1))
             possibleAnswers.add(questionData.get(randomIndexForButton2))
             possibleAnswers.add(questionData.get(randomIndexForButton3))
             possibleAnswers.add(questionData.get(randomIndexForButton4))
-            button1.text = questionData.get(randomIndexForButton1).toString()
-            button2.text = questionData.get(randomIndexForButton2).toString()
-            button3.text = questionData.get(randomIndexForButton3).toString()
-            button4.text = questionData.get(randomIndexForButton4).toString()
+            button1hard.text = questionData.get(randomIndexForButton1).toString()
+            button2hard.text = questionData.get(randomIndexForButton2).toString()
+            button3hard.text = questionData.get(randomIndexForButton3).toString()
+            button4hard.text = questionData.get(randomIndexForButton4).toString()
 
             correctAnswerIndex = (Math.random() * possibleAnswers.size).toInt()
             correctEntry = possibleAnswers.get(correctAnswerIndex)
@@ -177,11 +162,16 @@ class Game : AppCompatActivity() {
             val downloadingImageTask = DownloadingImageTask()
             downloadingImageTask.execute(correctEntry!!.type)
         }
-        var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox)
-        button1.background = backgroundpic
-        button2.background = backgroundpic
-        button3.background = backgroundpic
-        button4.background = backgroundpic
+        var answerboxDrawable = ContextCompat.getDrawable(this, R.drawable.answerbox)
+        button1easy.background = answerboxDrawable
+        button2easy.background = answerboxDrawable
+        button1normal.background = answerboxDrawable
+        button2normal.background = answerboxDrawable
+        button3normal.background = answerboxDrawable
+        button1hard.background = answerboxDrawable
+        button2hard.background = answerboxDrawable
+        button3hard.background = answerboxDrawable
+        button4hard.background = answerboxDrawable
     }
     fun button1IsClicked(buttonView: View)  {
         if (quizState == QUIZ_STATE.WAITING) {
@@ -216,38 +206,6 @@ class Game : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkForInternetConnection()
-        Toast.makeText(this, "The onResume method is called ", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        Toast.makeText(this, "The onPause method is called ", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        Toast.makeText(this, "The onStop method is called ", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-
-        Toast.makeText(this, "The onRestart method is called ", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        Toast.makeText(this, "The onDestroy method is called ", Toast.LENGTH_SHORT).show()
-    }
-
-    fun imageViewIsClicked(imageView: View) {
-
-        val randomNumber: Int = (Math.random() * 6).toInt() + 1
-        Log.i("TAG", "THE RANDOM NUBER IS: $randomNumber")
-
     }
 
     // Check for internet connection
@@ -290,19 +248,35 @@ class Game : AppCompatActivity() {
         if (userGuess != correctAnswerIndex) {
             userAnsweredIncorrectly++
             txtWrongAnswers.text = "$userAnsweredIncorrectly"
-            var correctPlantName = correctEntry.toString()
-            txtState.text = "Right answer: $correctPlantName"
+            var correctEntryName = correctEntry.toString()
+            txtState.text = "Correct answer: \n$correctEntryName"
 
-            var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox_wrong)
+            var answerboxWrongDrawable = ContextCompat.getDrawable(this, R.drawable.answerbox_wrong)
             when (userGuess) {
-                0 -> button1.setBackground(backgroundpic)
-                1 -> button2.setBackground(backgroundpic)
-                2 -> button3.setBackground(backgroundpic)
-                3 -> button4.setBackground(backgroundpic)
+                0 -> {
+                    button1easy.setBackground(answerboxWrongDrawable)
+                    button1normal.setBackground(answerboxWrongDrawable)
+                    button1hard.setBackground(answerboxWrongDrawable)
+                }
+                1 -> {
+                    button2easy.setBackground(answerboxWrongDrawable)
+                    button2normal.setBackground(answerboxWrongDrawable)
+                    button2hard.setBackground(answerboxWrongDrawable)
+                }
+                2 -> {
+                    button3normal.setBackground(answerboxWrongDrawable)
+                    button3hard.setBackground(answerboxWrongDrawable)
+                }
+                3 -> button4hard.setBackground(answerboxWrongDrawable)
             }
         } else {
             numberOfTimesUserAnsweredCorrectly++
-            currentScore++
+            when(level) {
+                LEVEL.EASY -> currentScore++
+                LEVEL.NORMAL -> currentScore += 2
+                LEVEL.HARD -> currentScore += 3
+                LEVEL.VERY_HARD -> currentScore += 4
+            }
             val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
             val editor = shared.edit()
             var highscore = shared.getInt("highscore", 0)
@@ -311,26 +285,36 @@ class Game : AppCompatActivity() {
                 editor.apply()
                 txtHighScore.setText(currentScore.toString())
             }
-            txtCurrentScore.setText(currentScore.toString())
+
 
             txtRightAnswers.text = "$numberOfTimesUserAnsweredCorrectly"
-            txtState.text = "Right answer!"
+            txtState.text = "Correct!"
 
-            var backgroundpic2 = ContextCompat.getDrawable(this, R.drawable.answerbox_correct)
+            var answerboxCorrectDrawable = ContextCompat.getDrawable(this, R.drawable.answerbox_correct)
             when (correctAnswerIndex) {
-                0 -> button1.setBackground(backgroundpic2)
-                1 -> button2.setBackground(backgroundpic2)
-                2 -> button3.setBackground(backgroundpic2)
-                3 -> button4.setBackground(backgroundpic2)
+                0 -> {
+                    button1easy.setBackground(answerboxCorrectDrawable)
+                    button1normal.setBackground(answerboxCorrectDrawable)
+                    button1hard.setBackground(answerboxCorrectDrawable)
+                }
+                1 -> {
+                    button2easy.setBackground(answerboxCorrectDrawable)
+                    button2normal.setBackground(answerboxCorrectDrawable)
+                    button2hard.setBackground(answerboxCorrectDrawable)
+                }
+                2 -> {
+                    button3normal.setBackground(answerboxCorrectDrawable)
+                    button3hard.setBackground(answerboxCorrectDrawable)
+                }
+                3 -> button4hard.setBackground(answerboxCorrectDrawable)
             }
         }
+        txtCurrentScore.text = currentScore.toString()
     }
 
     //Downloading Image Process
-
     inner class DownloadingImageTask: AsyncTask<String, Int, Bitmap?>() {
         override fun doInBackground(vararg imageType: String?): Bitmap? {
-
             try {
                 val downloadingObject = DownloadingObject()
 
@@ -355,34 +339,4 @@ class Game : AppCompatActivity() {
             imgTaken.setImageBitmap(result)
         }
     }
-
-    @SuppressLint("RestrictedApi")
-    private fun setUIWidgets(display:Boolean) {
-        if (display) {
-            imgTaken.setVisibility(View.VISIBLE)
-            button1.setVisibility(View.VISIBLE)
-            button2.setVisibility(View.VISIBLE)
-            button3.setVisibility(View.VISIBLE)
-            button4.setVisibility(View.VISIBLE)
-            txtState.setVisibility(View.VISIBLE)
-            txtRightAnswers.setVisibility(View.VISIBLE)
-            txtWrongAnswers.setVisibility(View.VISIBLE)
-            btnNextQuestion.setVisibility(View.VISIBLE) // suppressed
-        } else {
-            imgTaken.setVisibility(View.GONE)
-            button1.setVisibility(View.GONE)
-            button2.setVisibility(View.GONE)
-            button3.setVisibility(View.GONE)
-            button4.setVisibility(View.GONE)
-            txtState.setVisibility(View.GONE)
-            txtRightAnswers.setVisibility(View.GONE)
-            txtWrongAnswers.setVisibility(View.GONE)
-            btnNextQuestion.setVisibility(View.GONE) // suppressed
-        }
-    }
-
-    fun dpToPx(dp: Float, context: Context): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics)
-    }
-
 }
