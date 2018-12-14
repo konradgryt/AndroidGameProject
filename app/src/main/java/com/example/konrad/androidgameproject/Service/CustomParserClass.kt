@@ -19,11 +19,12 @@ class CustomParserClass {
         parsePersonObjectsFromJSONData(personURL, "")
         if (pages > 1) {
             for (i in 2..pages) {
-                Log.i("WELL", i.toString())
+                if (i == 10) { //CURRENT LIMIT OF API
+                    break
+                }
                 parsePersonObjectsFromJSONData(personURL, "?page=$i")
             }
         }
-        Log.i("WHAT", allPersonObjects.size.toString())
         return allPersonObjects
     }
 
@@ -31,23 +32,25 @@ class CustomParserClass {
         parsePlanetObjectsFromJSONData(planetURL, "")
         if (pages > 1) {
             for (i in 2..pages) {
-                Log.i("WELL", i.toString())
-                parsePlanetObjectsFromJSONData(planetURL, "?page=$i")
+                if (i == 3) { //CURRENT LIMIT OF API
+                    break
+                }
+                parsePlanetObjectsFromJSONData(planetURL, "?page=2")
             }
         }
-        Log.i("WHAT", allPlanetObjects.size.toString())
         return allPlanetObjects
     }
 
     fun parseVehicleFromJSONData(pages: Int): List<Vehicle>? {
         parseVehicleObjectsFromJSONData(vehicleURL, "")
         if (pages > 1) {
-            for (i in 2..pages) {
-                Log.i("WELL", i.toString())
-                parseVehicleObjectsFromJSONData(vehicleURL, "?page=$i")
-            }
+        for (i in 2..pages) {
+            if (i == 3) { //CURRENT LIMIT OF API
+              break
+          }
+        parseVehicleObjectsFromJSONData(vehicleURL, "?page=$i")
         }
-        Log.i("WHAT", allVehicleObjects.size.toString())
+            }
         return allVehicleObjects
     }
 
@@ -55,6 +58,9 @@ class CustomParserClass {
         parseSpeciesObjectsFromJSONData(speciesURL, "")
         if (pages > 1) {
             for (i in 2..pages) {
+                if (i == 5) { //CURRENT LIMIT OF API
+                    break
+                }
                 Log.i("WELL", i.toString())
                 parseSpeciesObjectsFromJSONData(speciesURL, "?page=$i")
             }

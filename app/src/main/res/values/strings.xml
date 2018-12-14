@@ -12,5 +12,5 @@
     <string name="padawan_difficulty">Two answers to select from\n1 point per right answer\nTotal bank of 10 cards per category</string>
     <string name="jedi_difficulty">Three answers to select from\n2 points per right answer\nTotal bank of 20 cards per category</string>
     <string name="jedi_knight_difficulty">Four answers to select from\n3 points per right answer\nTotal bank of 30 cards per category</string>
-    <string name="jedi_master_difficulty">Four answers to select from\n4 points per right answer\nTotal bank of 40 cards per category</string>
+    <string name="jedi_master_difficulty">Four answers to select from\n4 points per right answer\nFull bank of all cards</string>
 </resources>

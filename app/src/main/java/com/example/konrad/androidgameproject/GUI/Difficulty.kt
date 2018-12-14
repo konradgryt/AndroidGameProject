@@ -90,7 +90,7 @@ class Difficulty : AppCompatActivity() {
                     difficulty = LEVEL.HARD
                 }
                 "Very Hard" -> {
-                    pages = 4
+                    pages = 9
                     difficulty = LEVEL.VERY_HARD
                 }
             }
