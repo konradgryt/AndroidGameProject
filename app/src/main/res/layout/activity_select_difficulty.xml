@@ -7,158 +7,167 @@
     android:background="@color/colorPrimaryDark">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/titleDifficulity"
         android:layout_width="wrap_content"
         android:layout_height="72dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnPadawanDifficulty"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/difficulity" />
 
-    <ImageButton
-        android:id="@+id/btnPadawanDifficulty"
-        android:layout_width="230dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:contentDescription="@string/padawan_difficulty"
-        android:onClick="onClickEasyDifficulty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@drawable/padawan" />
-
-    <TextView
-        android:id="@+id/txtPadawanDifficulty"
-        android:layout_width="232dp"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/easyZone"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="#050505"
+        android:layout_marginBottom="24dp"
         android:onClick="onClickEasyDifficulty"
-        android:text="@string/padawan_difficulty"
-        android:textColor="@color/colorAccent"
-        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/normalZone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPadawanDifficulty" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageButton
-        android:id="@+id/btnJediDifficulty"
-        android:layout_width="184dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:contentDescription="@string/jedi_difficulty"
+        <ImageButton
+            android:id="@+id/btnPadawanDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/padawan_difficulty"
+            android:onClick="onClickEasyDifficulty"
+            app:layout_constraintBottom_toTopOf="@+id/txtPadawanDifficulty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/padawan" />
+
+        <TextView
+            android:id="@+id/txtPadawanDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:onClick="onClickEasyDifficulty"
+            android:text="@string/padawan_difficulty"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/normalZone"
+        android:background="#050505"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="24dp"
         android:onClick="onClickNormalDifficulty"
-        app:layout_constraintBottom_toTopOf="@+id/btnJediKnightDifficulty"
+        app:layout_constraintBottom_toTopOf="@+id/hardZone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPadawanDifficulty"
-        app:srcCompat="@drawable/jedi" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/txtJediDifficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:onClick="onClickNormalDifficulty"
-        android:text="@string/jedi_difficulty"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJediDifficulty" />
+        <ImageButton
+            android:id="@+id/btnJediDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/jedi_difficulty"
+            android:onClick="onClickNormalDifficulty"
+            app:layout_constraintBottom_toTopOf="@+id/txtJediDifficulty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/jedi" />
 
-    <ImageButton
-        android:id="@+id/btnJediKnightDifficulty"
-        android:layout_width="262dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:contentDescription="@string/jedi_knight_difficulty"
+        <TextView
+            android:id="@+id/txtJediDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|center"
+            android:onClick="onClickNormalDifficulty"
+            android:text="@string/jedi_difficulty"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/hardZone"
+        android:background="#050505"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="24dp"
         android:onClick="onClickHardDifficulty"
-        app:layout_constraintBottom_toTopOf="@+id/btnJediMasterDifficulty"
+        app:layout_constraintBottom_toTopOf="@+id/veryHardZone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJediDifficulty"
-        app:srcCompat="@drawable/jediknight" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/txtJediKnightDifficulty"
-        android:layout_width="263dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:onClick="onClickHardDifficulty"
-        android:text="@string/jedi_knight_difficulty"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/btnJediMasterDifficulty"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJediKnightDifficulty"
-        app:layout_constraintVertical_bias="0.0" />
+        <TextView
+            android:id="@+id/txtJediKnightDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:onClick="onClickHardDifficulty"
+            android:text="@string/jedi_knight_difficulty"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btnJediMasterDifficulty"
-        android:layout_width="276dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:contentDescription="@string/jedi_master_difficulty"
+        <ImageButton
+            android:id="@+id/btnJediKnightDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/jedi_knight_difficulty"
+            android:onClick="onClickHardDifficulty"
+            app:layout_constraintBottom_toTopOf="@+id/txtJediKnightDifficulty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/jediknight" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/veryHardZone"
+        android:background="#050505"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="32dp"
         android:onClick="onClickVeryHardDifficulty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJediKnightDifficulty"
-        app:layout_constraintVertical_bias="0.095"
-        app:srcCompat="@drawable/jedimaster" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/txtJediMasterDifficulty"
-        android:layout_width="277dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:onClick="onClickVeryHardDifficulty"
-        android:text="@string/jedi_master_difficulty"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJediMasterDifficulty"
-        app:layout_constraintVertical_bias="0.0" />
+        <ImageButton
+            android:id="@+id/btnJediMasterDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/jedi_master_difficulty"
+            android:onClick="onClickVeryHardDifficulty"
+            app:layout_constraintBottom_toTopOf="@+id/txtJediMasterDifficulty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/jedimaster" />
 
+        <TextView
+            android:id="@+id/txtJediMasterDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:onClick="onClickVeryHardDifficulty"
+            android:text="@string/jedi_master_difficulty"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
     <LinearLayout
         android:id="@+id/linearLayoutProgress"
         android:layout_width="match_parent"
@@ -188,5 +197,4 @@
             android:textSize="18sp" />
 
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

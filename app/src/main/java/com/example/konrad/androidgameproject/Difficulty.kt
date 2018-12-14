@@ -3,13 +3,12 @@ package com.example.konrad.androidgameproject
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.provider.Contacts
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import com.example.konrad.androidgameproject.Model.Person
 import java.util.*
-import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.activity_select_difficulty.*
 
 class Difficulty : AppCompatActivity() {
@@ -70,7 +69,7 @@ class Difficulty : AppCompatActivity() {
                 // There is no page 1 in the api
                 "Easy" -> pages = 0
                 "Normal" -> pages = 2
-                "Hard" -> pages = 3
+                "Hard" -> pages = 6
                 "Very Hard" -> pages = 3
             }
             difficulty = params[0]

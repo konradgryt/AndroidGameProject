@@ -6,255 +6,230 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".Game">
+    tools:context=".Game"
+    tools:layout_editor_absoluteY="81dp">
+
+    <Button
+        android:id="@+id/btnNextQuestion"
+        android:layout_width="144dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/nextquestion"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/txtHighScoreLabel"
+        android:layout_width="149dp"
+        android:layout_height="32dp"
+        android:layout_margin="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/highscore"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtHighScore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/txtHighScoreLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCurrentScoreLabel"
+        android:layout_width="94dp"
+        android:layout_height="30dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:background="@drawable/score"
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtCurrentScore"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCurrentScore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:gravity="center"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgTaken"
+        android:layout_width="0dp"
+        android:layout_height="315dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/placeholder"
+        android:contentDescription="@string/dark_mode"
+        android:focusable="true"
+        android:onClick="imageViewIsClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHighScore" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="150dp"
-        android:layout_height="315dp"
-        android:layout_margin="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/imgTaken">
 
         <TextView
             android:id="@+id/txtWrongAnswers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:textColor="#FF0000"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@+id/textWrongAnswersLabel"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.901" />
-
-        <TextView
-            android:id="@+id/txtHighScoreLabel"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
-            android:layout_margin="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/highscore"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.367" />
-
-        <TextView
-            android:id="@+id/txtCurrentScoreLabel"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_margin="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/score"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtHighScoreLabel"
-            app:layout_constraintVertical_bias="0.062" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textRightAnswersLabel"
-            android:layout_width="80dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:background="@drawable/right"
             android:textColor="@color/colorAccent"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.775" />
+            app:layout_constraintEnd_toStartOf="@+id/txtRightAnswers"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtRightAnswers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:textColor="#0000FF"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textRightAnswersLabel"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.774" />
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textWrongAnswersLabel"
-            android:layout_width="80dp"
-            android:layout_height="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/wrong"
             android:textColor="@color/colorAccent"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.901" />
-
-        <TextView
-            android:id="@+id/txtHighScore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="#FFFF00"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txtHighScoreLabel"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.371" />
-
-        <TextView
-            android:id="@+id/txtCurrentScore"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="#FFFF00"
-            android:textSize="19sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txtCurrentScoreLabel"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.485" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imgTaken"
-        android:layout_width="230dp"
-        android:layout_height="315dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/placeholder"
-        android:onClick="imageViewIsClicked"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/txtState"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnNextPlant"
-        app:layout_constraintHorizontal_bias="0.395"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgTaken"
-        app:layout_constraintVertical_bias="0.061" />
-
-    <Button
-        android:id="@+id/btnNextPlant"
-        android:layout_width="184dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/nextquestion"
-        android:clickable="true"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="183dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgTaken"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/answerbox"
+        android:onClick="button1IsClicked"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/answerbox"
-                android:onClick="button1IsClicked"
-                android:textColor="#FFFFFF"
-                android:visibility="gone" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/answerbox"
+        android:onClick="button2IsClicked"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/button1"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/answerbox"
-                android:onClick="button2IsClicked"
-                android:textColor="#FFFFFF"
-                android:visibility="gone" />
-        </LinearLayout>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/answerbox"
+        android:onClick="button3IsClicked"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button1" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/answerbox"
-                android:onClick="button3IsClicked"
-                android:textColor="#FFFFFF"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/answerbox"
-                android:onClick="button4IsClicked"
-                android:textColor="#FFFFFF"
-                android:visibility="gone" />
-
-        </LinearLayout>
-    </LinearLayout>
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/answerbox"
+        android:onClick="button4IsClicked"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/button2" />
 
 </android.support.constraint.ConstraintLayout>

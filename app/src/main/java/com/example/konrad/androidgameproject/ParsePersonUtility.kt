@@ -1,7 +1,8 @@
 package com.example.konrad.androidgameproject
 
 import android.util.Log
-import com.example.konrad.androidgameproject.Person.Companion.currentId
+import com.example.konrad.androidgameproject.Model.Person
+import com.example.konrad.androidgameproject.Model.Person.Companion.currentId
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -54,8 +55,8 @@ class ParsePersonUtility {
                 personObject.created = getString("created")
                 personObject.edited = getString("edited")
                 personObject.url = getString("url")
-            }
 
+            }
             allPersonObjects.add(personObject)
             index++
         }

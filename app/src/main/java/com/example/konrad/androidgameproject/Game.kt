@@ -17,7 +17,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
-import com.example.konrad.androidgameproject.Utility.encodeTobase64
+import com.example.konrad.androidgameproject.Model.Person
 import kotlinx.android.synthetic.main.activity_game.*
 
 class Game : AppCompatActivity() {
@@ -41,13 +41,16 @@ class Game : AppCompatActivity() {
         txtState.text = "Click 'generate question' when you are ready!"
 
         val shared = getSharedPreferences("App_settings", MODE_PRIVATE)
-        val currentAvatar = shared.getString("currentAvatar", "empty")
-        val currentNickname = shared.getString("currentNickname", "player")
+//        currentAvatar = shared.getString("currentAvatar", "empty")
+//        currentNickname = shared.getString("currentNickname", "player")
 
         txtHighScore.text = shared.getInt("highscore", 0).toString()
+        txtCurrentScore.text = currentScore.toString()
 
+        var difficulty = intent.getStringExtra("DIFFICULTY")
+        generateQuiz(difficulty)
 
-        btnNextPlant.setOnClickListener{
+        btnNextQuestion.setOnClickListener{
             if (checkForInternetConnection()) {
                 var difficulty = intent.getStringExtra("DIFFICULTY")
 
@@ -55,12 +58,14 @@ class Game : AppCompatActivity() {
                 generateQuiz(difficulty)
             }
         }
+
     }
 
     fun generateQuiz(difficulty: String) {
         quizState = QUIZ_STATE.WAITING
         txtState.text = "Select right person"
         val questionData = intent.getSerializableExtra("PEOPLE") as Array<Person>
+        questionData.map { i -> i.generateId() }
         val numberOfPeopleInBank = questionData.size
 
         if (difficulty == "Easy" && numberOfPeopleInBank > 0) {
@@ -123,9 +128,9 @@ class Game : AppCompatActivity() {
             var randomIndexForButton4: Int = (Math.random() * questionData.size).toInt()
             while (randomIndexForButton1 == randomIndexForButton2) { //randomize again
                 randomIndexForButton2 = (Math.random() * questionData.size).toInt()
-                while (randomIndexForButton2 == randomIndexForButton3 || randomIndexForButton1 == randomIndexForButton3) { //randomize again
+                while (randomIndexForButton3 == randomIndexForButton2 || randomIndexForButton3 == randomIndexForButton1) { //randomize again
                     randomIndexForButton3 = (Math.random() * questionData.size).toInt()
-                    while (randomIndexForButton3 == randomIndexForButton4 || randomIndexForButton2 == randomIndexForButton4|| randomIndexForButton1 == randomIndexForButton4) { //randomize again
+                    while (randomIndexForButton4 == randomIndexForButton1 || randomIndexForButton4 == randomIndexForButton2|| randomIndexForButton4 == randomIndexForButton3) { //randomize again
                         randomIndexForButton4 = (Math.random() * questionData.size).toInt()
                     }
                 }
@@ -262,7 +267,7 @@ class Game : AppCompatActivity() {
             userAnsweredIncorrectly++
             txtWrongAnswers.text = "$userAnsweredIncorrectly"
             var correctPlantName = correctPerson.toString()
-            txtState.text = "Wrong. Right answer: $correctPlantName"
+            txtState.text = "Right answer: $correctPlantName"
 
             var backgroundpic = ContextCompat.getDrawable(this, R.drawable.answerbox_wrong)
             when (userGuess) {
@@ -331,7 +336,7 @@ class Game : AppCompatActivity() {
             txtState.setVisibility(View.VISIBLE)
             txtRightAnswers.setVisibility(View.VISIBLE)
             txtWrongAnswers.setVisibility(View.VISIBLE)
-            btnNextPlant.setVisibility(View.VISIBLE) // suppressed
+            btnNextQuestion.setVisibility(View.VISIBLE) // suppressed
         } else {
             imgTaken.setVisibility(View.GONE)
             button1.setVisibility(View.GONE)
@@ -341,7 +346,7 @@ class Game : AppCompatActivity() {
             txtState.setVisibility(View.GONE)
             txtRightAnswers.setVisibility(View.GONE)
             txtWrongAnswers.setVisibility(View.GONE)
-            btnNextPlant.setVisibility(View.GONE) // suppressed
+            btnNextQuestion.setVisibility(View.GONE) // suppressed
         }
     }
 
