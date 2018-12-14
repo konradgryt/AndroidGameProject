@@ -1,6 +1,8 @@
 package com.example.konrad.androidgameproject.GUI;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -115,11 +117,27 @@ public class Options extends AppCompatActivity {
 
 
     public void resetData(View view) {
-        SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
-        Editor editor = shared.edit();
-        editor.clear();
-        editor.apply();
-        Toast.makeText(this,"DATA RESETED", Toast.LENGTH_SHORT).show();
+//        AlertDialog alertDialog = new AlertDialog.Builder(Options.this).create();
+//        alertDialog.setTitle("Deleting all data");
+//        alertDialog.setMessage("It will delete your profile and highscore");
+//        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences shared = getSharedPreferences("App_settings", MODE_PRIVATE);
+                        Editor editor = shared.edit();
+                        editor.clear();
+                        editor.apply();
+                        Toast.makeText(Options.this,"DATA DELETED", Toast.LENGTH_SHORT).show();
+//                        dialog.dismiss();
+//                    }
+//                });
+//        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//        alertDialog.show();
     }
 
     private void playAnimationOnView(View view, Techniques technique) {

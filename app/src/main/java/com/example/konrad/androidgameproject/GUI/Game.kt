@@ -86,6 +86,14 @@ class Game : AppCompatActivity() {
     }
 
     fun generateQuiz(level: LEVEL?, type: String) {
+        if (quizState == QUIZ_STATE.WAITING && currentScore > 0) {
+            when (level) {
+                 LEVEL.NORMAL -> currentScore--
+                 LEVEL.HARD -> currentScore--
+                 LEVEL.VERY_HARD -> currentScore-=2
+            }
+            playAnimationOnView(txtCurrentScore, Techniques.Shake)
+        }
         quizState = QUIZ_STATE.WAITING
         txtState.text = "Category: $type"
 
@@ -253,16 +261,15 @@ class Game : AppCompatActivity() {
         val alertDialog: AlertDialog = AlertDialog.Builder(this@Game).create()
         alertDialog.setTitle("Network Error")
         alertDialog.setMessage("Please check internet connection")
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", {
-            dialog: DialogInterface?, which: Int ->
-            startActivity(Intent(Settings.ACTION_SETTINGS))
-        })
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Cancel", {
-            dialog: DialogInterface?, which: Int ->
-            Toast.makeText(this@Game, " You must be connected to the internet", Toast.LENGTH_SHORT).show()
-            finish() // closing current activity
-        })
-
+//        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", {
+//            dialog: DialogInterface?, which: Int ->
+//            startActivity(Intent(Settings.ACTION_SETTINGS))
+//        })
+//        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Cancel", {
+//            dialog: DialogInterface?, which: Int ->
+//            Toast.makeText(this@Game, " You must be connected to the internet", Toast.LENGTH_SHORT).show()
+//            finish() // closing current activity
+//        })
         alertDialog.show()
     }
 
