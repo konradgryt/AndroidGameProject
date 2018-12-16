@@ -164,6 +164,7 @@ class Difficulty : AppCompatActivity() {
             gameIntent.putExtra("DIFFICULTY", difficulty)
             startActivityForResult(gameIntent, START_GAME)
             setProgressBar(false)
+            finish()
         }
     }
 

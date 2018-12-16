@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.konrad.androidgameproject.Model.Entry
 import com.example.konrad.androidgameproject.Model.TYPE
 import com.example.konrad.androidgameproject.R
@@ -343,6 +344,10 @@ class Game : AppCompatActivity() {
             playAnimationOnView(txtCurrentScore,Techniques.Pulse)
         }
         txtCurrentScore.text = currentScore.toString()
+        if (userAnsweredIncorrectly == 10) {
+            Toast.makeText(this@Game, "You lost! Your score was:$currentScore", Toast.LENGTH_LONG).show()
+            finish()
+        }
     }
 
     //Downloading Image Process
