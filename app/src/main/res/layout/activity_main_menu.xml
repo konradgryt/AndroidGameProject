@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/colorPrimaryDark"
-    tools:context=".GUI.MainMenu">
+    tools:context=".View.MainMenu">
 
 
     <ImageView

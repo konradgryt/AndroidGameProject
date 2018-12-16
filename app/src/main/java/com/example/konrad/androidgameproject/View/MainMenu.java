@@ -1,4 +1,4 @@
-package com.example.konrad.androidgameproject.GUI;
+package com.example.konrad.androidgameproject.View;
 
 
 import android.content.Intent;
@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.konrad.androidgameproject.R;
-import com.example.konrad.androidgameproject.Service.SoundService;
-import com.example.konrad.androidgameproject.Service.Utility;
+import com.example.konrad.androidgameproject.Controller.SoundService;
+import com.example.konrad.androidgameproject.Controller.Utility;
 
 public class MainMenu extends AppCompatActivity {
     final int OPEN_DIFFICULTY_CODE = 1000;

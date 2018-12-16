@@ -1,23 +1,19 @@
-package com.example.konrad.androidgameproject.GUI
+package com.example.konrad.androidgameproject.View
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.*
-import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.example.konrad.androidgameproject.Model.Entry
 import com.example.konrad.androidgameproject.Model.TYPE
 import com.example.konrad.androidgameproject.R
-import com.example.konrad.androidgameproject.Service.DownloadingObject
+import com.example.konrad.androidgameproject.Controller.DownloadingObject
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import kotlinx.android.synthetic.main.activity_game.*
@@ -90,8 +86,9 @@ class Game : AppCompatActivity() {
             when (level) {
                  LEVEL.NORMAL -> currentScore--
                  LEVEL.HARD -> currentScore--
-                 LEVEL.VERY_HARD -> currentScore-=2
+                 LEVEL.VERY_HARD -> currentScore-=4
             }
+            txtCurrentScore.text = currentScore.toString()
             playAnimationOnView(txtCurrentScore, Techniques.Shake)
         }
         quizState = QUIZ_STATE.WAITING
@@ -228,12 +225,6 @@ class Game : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        Toast.makeText(this, "The onStart method is called ", Toast.LENGTH_SHORT).show()
-    }
-
     override fun onResume() {
         super.onResume()
         checkForInternetConnection()
@@ -355,7 +346,7 @@ class Game : AppCompatActivity() {
     }
 
     //Downloading Image Process
-    inner class DownloadingImageTask: AsyncTask<String, Int, Bitmap?>() {
+    internal inner class DownloadingImageTask: AsyncTask<String, Int, Bitmap?>() {
         override fun doInBackground(vararg imageType: String?): Bitmap? {
             try {
                 val downloadingObject = DownloadingObject()

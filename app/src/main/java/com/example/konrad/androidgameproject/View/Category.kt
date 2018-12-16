@@ -1,4 +1,4 @@
-package com.example.konrad.androidgameproject.GUI
+package com.example.konrad.androidgameproject.View
 
 
 import android.os.Bundle

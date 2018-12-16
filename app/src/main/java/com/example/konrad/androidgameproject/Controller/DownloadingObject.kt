@@ -1,4 +1,4 @@
-package com.example.konrad.androidgameproject.Service
+package com.example.konrad.androidgameproject.Controller
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

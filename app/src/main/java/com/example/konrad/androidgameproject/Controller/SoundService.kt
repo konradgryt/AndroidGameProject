@@ -1,4 +1,4 @@
-package com.example.konrad.androidgameproject.Service
+package com.example.konrad.androidgameproject.Controller
 
 import android.app.Service
 import android.content.Intent
@@ -15,9 +15,8 @@ class SoundService: Service() {
 
     override fun onCreate() {
         super.onCreate()
-
         player = MediaPlayer.create(this, R.raw.music)
-        player?.setLooping(true)
+        player?.isLooping = true
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

@@ -1,8 +1,5 @@
-package com.example.konrad.androidgameproject.GUI;
+package com.example.konrad.androidgameproject.View;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,7 +17,7 @@ import android.os.Vibrator;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.konrad.androidgameproject.R;
-import com.example.konrad.androidgameproject.Service.SoundService;
+import com.example.konrad.androidgameproject.Controller.SoundService;
 
 public class Options extends AppCompatActivity {
 

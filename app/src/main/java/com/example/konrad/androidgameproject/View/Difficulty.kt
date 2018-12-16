@@ -1,4 +1,4 @@
-package com.example.konrad.androidgameproject.GUI
+package com.example.konrad.androidgameproject.View
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -12,14 +12,12 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.GridLayout
 import android.widget.Toast
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.konrad.androidgameproject.Model.*
-import com.example.konrad.androidgameproject.Service.CustomParserClass
+import com.example.konrad.androidgameproject.Controller.CustomParserClass
 import com.example.konrad.androidgameproject.R
-import kotlinx.android.synthetic.main.activity_select_categories.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_select_difficulty.*
 
@@ -86,7 +84,7 @@ class Difficulty : AppCompatActivity() {
         }
     }
 
-    inner class DownloadingQuestionDataTask: AsyncTask<String, Int, Boolean>() {
+    internal inner class DownloadingQuestionDataTask: AsyncTask<String, Int, Boolean>() {
 
         var listOfPeople: List<Person>? = null
         var listOfPlanets: List<Planet>? = null
